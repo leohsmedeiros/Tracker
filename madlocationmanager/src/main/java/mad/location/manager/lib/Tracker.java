@@ -23,8 +23,6 @@ import android.content.res.XmlResourceParser;
 import android.support.annotation.RequiresPermission;
 
 import mad.location.manager.lib.Services.AwsIotSettings;
-import mad.location.manager.lib.Services.KalmanLocationService;
-import mad.location.manager.lib.Services.ServicesHelper;
 import mad.location.manager.lib.Services.TrackerService;
 import mad.location.manager.lib.utils.Logger;
 import mad.location.manager.lib.utils.TrackerSharedPreferences;
@@ -38,7 +36,7 @@ public class Tracker {
     private Context context;
     private TrackerSettings trackerSettings;
 
-    private KalmanLocationService kalmanLocationService;
+    private TrackerService trackerService;
 
     private Tracker(Context context, TrackerSettings trackerSettings) {
 //        this.context = context.getApplicationContext();
@@ -75,7 +73,7 @@ public class Tracker {
         */
 
 
-//        TrackerService trackerService = new TrackerService();
+        TrackerService trackerService = new TrackerService();
         mServiceIntent = new Intent(context, TrackerService.class);
 
         Logger.d("isMyServiceRunning? " + (isMyServiceRunning(TrackerService.class)));

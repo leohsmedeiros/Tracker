@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import mad.location.manager.lib.Services.ServicesHelper;
+import mad.location.manager.lib.Services.TrackerService;
 import mad.location.manager.lib.utils.Logger;
 import mad.location.manager.lib.utils.TrackerSharedPreferences;
 
@@ -33,19 +34,20 @@ public class TrackerBroadcastReceiver extends BroadcastReceiver {
             TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
 
             if (trackerSettings != null && trackerSettings.isSettedToRestart()) {
-//                context.startService(new Intent(context, TrackerService.class));
-                ServicesHelper.getLocationService(context, value -> {
 
-                    Logger.d("getLocationService");
-                    if (!value.IsRunning()) {
-                        Logger.d("not running");
-                        value.stop();
-                        value.reset(trackerSettings.getKalmanSettings()); //warning!! here you can adjust your filter behavior
-                        value.start();
-                    }else {
-                        Logger.d("is running");
-                    }
-                });
+                context.startService(new Intent(context, TrackerService.class));
+
+//                ServicesHelper.getLocationService(context, value -> {
+//                    Logger.d("getLocationService");
+//                    if (!value.IsRunning()) {
+//                        Logger.d("not running");
+//                        value.stop();
+//                        value.reset(trackerSettings.getKalmanSettings()); //warning!! here you can adjust your filter behavior
+//                        value.start();
+//                    }else {
+//                        Logger.d("is running");
+//                    }
+//                });
 
 
             }

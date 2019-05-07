@@ -1,13 +1,14 @@
 package mad.location.manager.lib.Interfaces;
 
-import static mad.location.manager.lib.Services.KalmanLocationService.ServiceStatus;
+
+import mad.location.manager.lib.Services.LocationService;
 
 /**
  * Created by lezh1k on 2/13/18.
  */
 
 public interface LocationServiceStatusInterface {
-    void serviceStatusChanged(ServiceStatus status);
+    void serviceStatusChanged(LocationService.ServiceStatus status);
     void GPSStatusChanged(int activeSatellites);
     void GPSEnabledChanged(boolean enabled);
     void lastLocationAccuracyChanged(float accuracy);

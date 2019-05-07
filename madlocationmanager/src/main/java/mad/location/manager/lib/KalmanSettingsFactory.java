@@ -1,17 +1,13 @@
 package mad.location.manager.lib;
 
 import android.content.res.XmlResourceParser;
-import com.amazonaws.regions.Regions;
+import mad.location.manager.lib.Services.TrackerService;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
 
 import mad.location.manager.lib.Commons.Utils;
-import mad.location.manager.lib.Services.KalmanLocationService;
 
 class KalmanSettingsFactory {
     private double accelerationDeviation = Utils.ACCELEROMETER_DEFAULT_DEVIATION;
@@ -50,7 +46,7 @@ class KalmanSettingsFactory {
         }
     }
 
-    KalmanLocationService.Settings buildSettings (XmlResourceParser parser) throws IOException {
+    TrackerService.Settings buildSettings (XmlResourceParser parser) throws IOException {
         if (parser != null) {
             try {
                 int eventType = parser.getEventType();
@@ -69,20 +65,21 @@ class KalmanSettingsFactory {
             }
         }
 
-        return new KalmanLocationService.Settings(accelerationDeviation,
-                                                  gpsMinDistance,
-                                                  gpsMinTime,
-                                                  Utils.SENSOR_POSITION_MIN_TIME,
-                                                  geoHashPrecision,
-                                                  geoHashMinPointCount,
-                                                  sensorFfequencyHz,
-                                                  null,
-                                                  filterMockGpsCoordinates,
-                                                  velFactor,
-                                                  posFactor);
+        return new TrackerService.Settings(
+                accelerationDeviation,
+                gpsMinDistance,
+                gpsMinTime,
+                Utils.SENSOR_POSITION_MIN_TIME,
+                geoHashPrecision,
+                geoHashMinPointCount,
+                sensorFfequencyHz,
+                null,
+                filterMockGpsCoordinates,
+                velFactor,
+                posFactor);
   }
 
-    KalmanLocationService.Settings buildSettings () throws IOException {
+    TrackerService.Settings buildSettings () throws IOException {
         return buildSettings (null);
     }
 

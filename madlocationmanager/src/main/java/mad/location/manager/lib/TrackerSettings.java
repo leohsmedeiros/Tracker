@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import mad.location.manager.lib.Services.AwsIotSettings;
-import mad.location.manager.lib.Services.KalmanLocationService;
+import mad.location.manager.lib.Services.TrackerService;
 
 public class TrackerSettings implements Serializable {
 
     private AwsIotSettings awsIotSettings;
-    private KalmanLocationService.Settings kalmanSettings;
+    private TrackerService.Settings kalmanSettings;
     private Boolean restartIfKilled = true;
     private int intervalInSeconds = 10;
     private String trackedId = null;
@@ -58,11 +58,11 @@ public class TrackerSettings implements Serializable {
         return trackedId;
     }
 
-    void setKalmanSettings (KalmanLocationService.Settings kalmanSettings) {
+    void setKalmanSettings (TrackerService.Settings kalmanSettings) {
         this.kalmanSettings = kalmanSettings;
     }
 
-    public KalmanLocationService.Settings getKalmanSettings () {
+    public TrackerService.Settings getKalmanSettings () {
         return kalmanSettings;
     }
 
