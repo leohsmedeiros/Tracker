@@ -12,11 +12,17 @@
 
     <application>
 
+        <!--<service-->
+                <!--android:name="mad.location.manager.lib.Services.KalmanLocationService"-->
+                <!--android:enabled="true"-->
+                <!--android:exported="false"-->
+                <!--android:stopWithTask="false" />-->
         <service
-                android:name="mad.location.manager.lib.Services.KalmanLocationService"
+                android:name="mad.location.manager.lib.Services.TrackerService"
                 android:enabled="true"
                 android:exported="false"
                 android:stopWithTask="false" />
+
         <receiver
                 android:name="mad.location.manager.lib.TrackerBroadcastReceiver"
                 android:enabled="true"
