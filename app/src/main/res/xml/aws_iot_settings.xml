@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<aws_mqtt_settings>
+    <customer_specific_endpoint>a3osiwrh9rh7nx-ats.iot.us-east-1.amazonaws.com</customer_specific_endpoint>
+    <aws_iot_policy_name>MyIotAndroidPolicy</aws_iot_policy_name>
+    <my_region>us-east-1</my_region>
+    <keystore_name>iot_keystore</keystore_name>
+    <keystore_password>password</keystore_password>
+    <certificate_id>default</certificate_id>
+    <topic>my/driverposition</topic>
+</aws_mqtt_settings>

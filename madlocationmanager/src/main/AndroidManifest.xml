@@ -1,0 +1,36 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="mad.location.manager" >
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--We don't need these permissions in lib-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+    <application>
+
+        <service
+                android:name="mad.location.manager.lib.Services.KalmanLocationService"
+                android:enabled="true"
+                android:exported="false"
+                android:stopWithTask="false" />
+        <receiver
+                android:name="mad.location.manager.lib.TrackerBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true"
+                android:label="RestartServiceWhenStopped">
+
+            <intent-filter>
+                <action android:name="uk.ac.shef.oak.ActivityRecognition.RestartSensor"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
+        </receiver>
+
+    </application>
+
+</manifest>
+
