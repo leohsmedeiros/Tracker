@@ -13,12 +13,12 @@ import com.karumi.dexter.listener.PermissionRequest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import br.com.phonetracker.lib.loggers.Logger
+import br.com.phonetracker.lib.commons.Logger
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var dexterPermissionBuilder: DexterBuilder
+    private lateinit var dexterPermissionBuilder: DexterBuilder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

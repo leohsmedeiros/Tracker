@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Button
 import br.com.phonetracker.lib.interfaces.LocationServiceInterface
 import br.com.phonetracker.lib.Tracker
-import br.com.phonetracker.lib.loggers.Logger
+import br.com.phonetracker.lib.commons.Logger
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

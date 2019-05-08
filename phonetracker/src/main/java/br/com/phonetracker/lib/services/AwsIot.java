@@ -28,7 +28,7 @@ import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
-import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

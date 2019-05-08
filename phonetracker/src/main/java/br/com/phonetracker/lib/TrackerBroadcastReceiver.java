@@ -16,7 +16,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import br.com.phonetracker.lib.services.TrackerService;
-import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.Logger;
 import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 

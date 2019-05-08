@@ -9,7 +9,7 @@ import br.com.phonetracker.lib.commons.SensorGpsDataItem;
 import br.com.phonetracker.lib.commons.Utils;
 import br.com.phonetracker.lib.TrackerSettings;
 import br.com.phonetracker.lib.commons.Battery;
-import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.Logger;
 
 import java.util.*;
 

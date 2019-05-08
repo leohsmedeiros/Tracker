@@ -15,9 +15,9 @@ import br.com.phonetracker.lib.commons.Utils;
 import br.com.phonetracker.lib.filters.GPSAccKalmanFilter;
 import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
 import br.com.phonetracker.lib.interfaces.LocationServiceStatusInterface;
-import br.com.phonetracker.lib.loggers.GeohashRTFilter;
+import br.com.phonetracker.lib.commons.GeohashRTFilter;
 import br.com.phonetracker.lib.TrackerSettings;
-import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.Logger;
 import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 import java.util.*;

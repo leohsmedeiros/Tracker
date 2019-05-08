@@ -25,7 +25,7 @@ import android.support.annotation.RequiresPermission;
 import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
 import br.com.phonetracker.lib.services.AwsIotSettings;
 import br.com.phonetracker.lib.services.TrackerService;
-import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.Logger;
 import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 import java.io.IOException;
