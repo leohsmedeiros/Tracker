@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kalman_settings>
+    <accelerationDeviation>0.1</accelerationDeviation>
+    <gpsMinTime>5000</gpsMinTime>
+    <gpsMinDistance>10</gpsMinDistance>
+    <geoHashPrecision>6</geoHashPrecision>
+    <geoHashMinPointCount>2</geoHashMinPointCount>
+    <sensorFfequencyHz>10</sensorFfequencyHz>
+    <filterMockGpsCoordinates>false</filterMockGpsCoordinates>
+    <velFactor>1.0</velFactor>
+    <posFactor>1.0</posFactor>
+</kalman_settings>

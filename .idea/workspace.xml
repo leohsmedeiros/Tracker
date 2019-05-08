@@ -12,15 +12,26 @@
       </filter>
     </filters>
   </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="phonetracker" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9362dcb5-7e9b-4be2-a402-d4fe2fd86e4e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/LocationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_0_1_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_maps_16_1_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/kalman_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -33,20 +44,59 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_13_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Tracker.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/madlocationmanager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/madlocationmanager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/madlocationmanager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/phonetracker.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/proguard-rules.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/res/raw/awsconfiguration.json" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/res/raw/awsconfiguration.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madlocationmanager/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/androidTest/java/mad/location/manager/androidTest/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/Coordinates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/GeoPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/Matrix.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/SensorGpsDataItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Filters/GPSAccKalmanFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Filters/GeoHash.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Filters/KalmanFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Filters/MadgwickAHRS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Interfaces/ILogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Interfaces/SimpleTempCallback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Loggers/GeohashRTFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/SensorAux/DeviationCalculator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/SensorAux/SensorCalibrator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/AwsIot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/AwsIotSettings.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/LocationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/TrackerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Tracker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/TrackerSettings.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/utils/Battery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/utils/Logger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/utils/TrackerSharedPreferences.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/test/java/mad/location/manager/test/CoordinatesUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/test/java/mad/location/manager/test/DeviationsCalculatorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/test/java/mad/location/manager/test/GeoHashUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/test/java/mad/location/manager/test/MatrixUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/test/java/mad/location/manager/test/SensorGpsDataItemQueueUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,121 +117,59 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java">
+        <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="-323">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4602#4603#0" expanded="true" />
-                <element signature="e#4670#4671#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/LocationService.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/kalman_settings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1716">
-              <caret line="184" selection-start-line="184" selection-end-line="184" />
+            <state relative-caret-position="45">
+              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="363">
+              <caret line="48" column="80" selection-start-line="48" selection-start-column="80" selection-end-line="48" selection-end-column="80" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="class#ServiceStatus#0;class#LocationService#0" />
-                <element signature="method#ServiceStatus#0;class#ServiceStatus#0;class#LocationService#0" />
-                <element signature="method#getValue#0;class#ServiceStatus#0;class#LocationService#0" />
-                <element signature="method#Settings#0;class#Settings#0;class#LocationService#0" />
-                <element signature="method#IsRunning#0;class#LocationService#0" />
-                <element signature="method#addInterface#0;class#LocationService#0" />
-                <element signature="method#addInterfaces#0;class#LocationService#0" />
-                <element signature="method#removeInterface#0;class#LocationService#0" />
-                <element signature="method#removeStatusInterface#0;class#LocationService#0" />
-                <element signature="method#addStatusInterfaces#0;class#LocationService#0" />
+                <element signature="e#41#765#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="176" column="39" selection-start-line="176" selection-start-column="39" selection-end-line="176" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4144#4145#0" expanded="true" />
-                <element signature="e#4195#4196#0" expanded="true" />
-                <element signature="e#2381#2472#1" />
-                <element signature="e#291#292#0" expanded="true" />
-                <element signature="e#318#319#0" expanded="true" />
-                <element signature="e#2603#2677#1" />
-                <element signature="e#2683#3086#1" />
-                <element signature="e#4218#4290#1" />
-                <element signature="e#4296#4479#1" />
-                <element signature="e#4520#4569#1" />
-                <element signature="e#4827#4944#1" />
-                <element signature="method#reset#0;class#TrackerService#0" />
-                <element signature="e#5338#5484#1" />
-                <element signature="e#1000#1028#0" />
-                <element signature="method#onSensorChanged#0;class#TrackerService#0" />
-                <element signature="e#1939#1985#1" />
-                <element signature="method#onAccuracyChanged#0;class#TrackerService#0" />
-                <element signature="e#1230#1255#0" />
-                <element signature="method#onLocationChanged#0;class#TrackerService#0" />
-                <element signature="e#7118#7188#0" />
-                <element signature="e#7983#8740#1" />
-                <element signature="method#onStatusChanged#0;class#TrackerService#0" />
-                <element signature="method#onProviderEnabled#0;class#TrackerService#0" />
-                <element signature="e#9568#9637#1" />
-                <element signature="method#onProviderDisabled#0;class#TrackerService#0" />
-                <element signature="e#1595#1622#0" />
-                <element signature="method#onGpsStatusChanged#0;class#TrackerService#0" />
-                <element signature="e#10454#10536#1" />
-                <element signature="e#10605#11120#1" />
-                <element signature="e#10678#10760#1" />
-                <element signature="e#10801#11110#1" />
-                <element signature="e#10983#11096#1" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2520">
-              <caret line="168" column="2" selection-start-line="168" selection-start-column="2" selection-end-line="168" selection-end-column="2" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerTask.java">
+        <entry file="file://$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="75" selection-start-line="49" selection-end-line="75" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#914#1065#0" expanded="true" />
-                <element signature="e#1064#1065#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="330">
+              <caret line="22" column="128" selection-start-line="22" selection-start-column="128" selection-end-line="22" selection-end-column="128" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/AndroidManifest.xml">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="20" column="78" selection-start-line="20" selection-start-column="78" selection-end-line="20" selection-end-column="78" />
-            </state>
+            <state relative-caret-position="-339" />
           </provider>
-          <provider editor-type-id="android-manifest" />
         </entry>
       </file>
     </leaf>
@@ -195,24 +183,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onSensor</find>
-      <find>Log.e</find>
-      <find>Logger.d(TAG,</find>
-      <find>event</find>
-      <find>linearAcceleration</find>
-      <find>m_kalmanFilter</find>
-      <find>m_magneticDeclination</find>
-      <find>m_settings</find>
-      <find>m_locationServiceStatusInterfaces</find>
-      <find>start</find>
-      <find>m_sensorsEnabled</find>
-      <find>Log.d</find>
       <find>m_gpsEnabled</find>
       <find>m_activeSatellites</find>
-      <find>m_sensorDataQueue</find>
       <find>m_locationManager</find>
       <find>m_gpsStatus</find>
-      <find>m_wakeLock</find>
       <find>KalmanLocationService()</find>
       <find>TrackerService</find>
       <find>SensorDataEventLoopTask</find>
@@ -222,11 +196,28 @@
       <find>m_lstSensors</find>
       <find>m_eventLoopTask =</find>
       <find>needTerminate</find>
+      <find>handlePredict</find>
+      <find>doInBackground</find>
+      <find>SEC_TIME_BASE</find>
+      <find>publishProgress</find>
       <find>onTaskRemoved</find>
+      <find>stopTask</find>
+      <find>m_kalmanFilter</find>
+      <find>m_wakeLock</find>
+      <find>onLocationChanged</find>
+      <find>owner.m_kalmanFilter</find>
+      <find>onSensorChanged</find>
+      <find>KalmanPredict</find>
+      <find>gpsLat</find>
+      <find>m_sensorDataQueue</find>
+      <find>handleUpdate</find>
+      <find>KalmanUpdate</find>
+      <find>mad.location.manager</find>
     </findStrings>
     <replaceStrings>
       <replace>Logger.d</replace>
       <replace>Logger.d(</replace>
+      <replace>br.com.phonetracker</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -235,24 +226,48 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/madlocationmanager/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerSettings.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java" />
-        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java" />
-        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/LocationService.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java" />
+        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/utils/TrackerSharedPreferences.java" />
+        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java" />
+        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/LocationService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/madlocationmanager/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/AwsIot.java" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/xml/kalman_settings.xml" />
         <option value="$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerTask.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/SensorGpsDataItemQueueUnitTest.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/MatrixUnitTest.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/GeoHashUnitTest.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/DeviationsCalculatorTest.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/CoordinatesUnitTest.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerBroadcastReceiver.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/Battery.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/KalmanSettingsFactory.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/TrackerSharedPreferences.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/AwsIot.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/AwsIotSettings.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/LocationService.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/ServicesHelper.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerService.java" />
+        <option value="$PROJECT_DIR$/phonetracker/build/generated/source/buildConfig/debug/mad/location/manager/BuildConfig.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt" />
+        <option value="$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="12" />
-    <option name="y" value="220" />
+    <option name="y" value="34" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
   </component>
@@ -261,7 +276,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -271,39 +287,57 @@
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="madlocationmanager" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="madlocationmanager" type="feadf853:AndroidModuleNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="madlocationmanager" type="feadf853:AndroidModuleNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="trackerconsumer" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="lib" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="madlocationmanager" type="feadf853:AndroidModuleNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="lib" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="Services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="madlocationmanager" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="lib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -312,6 +346,14 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.packageName">
+      <recent name="com.leomedeiros.trackerconsumer" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -404,41 +446,33 @@
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" visible="true" weight="0.3297568" />
-      <window_info id="Structure" side_tool="true" />
-      <window_info id="Build Variants" side_tool="true" />
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="Resources Explorer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Run" />
-      <window_info active="true" anchor="bottom" id="Logcat" visible="true" weight="0.32907802" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="TODO" />
-      <window_info anchor="bottom" id="Android Profiler" />
-      <window_info anchor="bottom" id="Debug" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Build" weight="0.32907802" />
-      <window_info anchor="bottom" id="Find" />
-      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Gradle" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Palette&#9;" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.3297568" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Resources Explorer" order="7" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info anchor="bottom" id="Run" order="0" />
+      <window_info anchor="bottom" id="Logcat" order="1" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="6" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32907802" />
+      <window_info anchor="bottom" id="Find" order="8" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="20" column="78" selection-start-line="20" selection-start-column="78" selection-end-line="20" selection-end-column="78" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-26/android.jar!/android/hardware/SensorEventListener.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -460,21 +494,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Interfaces/LocationServiceStatusInterface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Commons/Utils.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerSettings.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/TrackerSettings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
           <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
@@ -484,14 +518,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2415">
-          <caret line="201" selection-start-line="55" selection-end-line="201" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java">
+    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/KalmanLocationService.java" />
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/KalmanSettingsFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
           <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
@@ -501,14 +529,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/ServicesHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
           <caret line="110" column="32" selection-start-line="110" selection-start-column="32" selection-end-line="110" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/TrackerBroadcastReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
@@ -533,29 +561,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/utils/TrackerSharedPreferences.java">
+    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java" />
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-26/android.jar!/java/util/Queue.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="60">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Tracker.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/aws_iot_settings.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-26/android.jar!/java/util/concurrent/PriorityBlockingQueue.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="136">
+          <caret line="14" column="34" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4602#4603#0" expanded="true" />
-            <element signature="e#4670#4671#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/LocationService.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/utils/TrackerSharedPreferences.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1716">
-          <caret line="184" selection-start-line="184" selection-end-line="184" />
+        <state relative-caret-position="195">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Commons/SensorGpsDataItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="17" />
+          <folding>
+            <element signature="e#1520#1521#0" expanded="true" />
+            <element signature="e#1549#1550#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Tracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/TrackerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2355">
+          <caret line="186" column="92" selection-start-line="186" selection-start-column="92" selection-end-line="186" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#reset#0;class#TrackerService#0" />
+            <element signature="method#onAccuracyChanged#0;class#TrackerService#0" />
+            <element signature="method#onStatusChanged#0;class#TrackerService#0" />
+            <element signature="method#onProviderEnabled#0;class#TrackerService#0" />
+            <element signature="method#onProviderDisabled#0;class#TrackerService#0" />
+            <element signature="method#onGpsStatusChanged#0;class#TrackerService#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/LocationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#ServiceStatus#0;class#LocationService#0" />
@@ -572,67 +648,202 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/SensorDataEventLoopTask.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/AwsIot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2520">
-          <caret line="168" column="2" selection-start-line="168" selection-start-column="2" selection-end-line="168" selection-end-column="2" />
+        <state relative-caret-position="2730">
+          <caret line="204" column="52" selection-start-line="204" selection-start-column="52" selection-end-line="204" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-422" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/mad/location/manager/lib/Services/TrackerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerService.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/DeviationsCalculatorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="176" column="39" selection-start-line="176" selection-start-column="39" selection-end-line="176" selection-end-column="39" />
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/GeoHashUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/MatrixUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/SensorGpsDataItemQueueUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/test/java/br/com/phonetracker/test/CoordinatesUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/Battery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="38" lean-forward="true" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/KalmanSettingsFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerBroadcastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" lean-forward="true" selection-start-column="39" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/TrackerSharedPreferences.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="31" selection-start-column="31" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/LocationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/AwsIotSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/AwsIot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/kalman_settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-339" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-323">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4144#4145#0" expanded="true" />
-            <element signature="e#4195#4196#0" expanded="true" />
-            <element signature="e#2381#2472#1" />
-            <element signature="e#291#292#0" expanded="true" />
-            <element signature="e#318#319#0" expanded="true" />
-            <element signature="e#2603#2677#1" />
-            <element signature="e#2683#3086#1" />
-            <element signature="e#4218#4290#1" />
-            <element signature="e#4296#4479#1" />
-            <element signature="e#4520#4569#1" />
-            <element signature="e#4827#4944#1" />
-            <element signature="method#reset#0;class#TrackerService#0" />
-            <element signature="e#5338#5484#1" />
-            <element signature="e#1000#1028#0" />
-            <element signature="method#onSensorChanged#0;class#TrackerService#0" />
-            <element signature="e#1939#1985#1" />
-            <element signature="method#onAccuracyChanged#0;class#TrackerService#0" />
-            <element signature="e#1230#1255#0" />
-            <element signature="method#onLocationChanged#0;class#TrackerService#0" />
-            <element signature="e#7118#7188#0" />
-            <element signature="e#7983#8740#1" />
-            <element signature="method#onStatusChanged#0;class#TrackerService#0" />
-            <element signature="method#onProviderEnabled#0;class#TrackerService#0" />
-            <element signature="e#9568#9637#1" />
-            <element signature="method#onProviderDisabled#0;class#TrackerService#0" />
-            <element signature="e#1595#1622#0" />
-            <element signature="method#onGpsStatusChanged#0;class#TrackerService#0" />
-            <element signature="e#10454#10536#1" />
-            <element signature="e#10605#11120#1" />
-            <element signature="e#10678#10760#1" />
-            <element signature="e#10801#11110#1" />
-            <element signature="e#10983#11096#1" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/madlocationmanager/src/main/java/mad/location/manager/lib/Services/TrackerTask.java">
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/ServicesHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="75" selection-start-line="49" selection-end-line="75" />
+        <state relative-caret-position="95">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="48" column="80" selection-start-line="48" selection-start-column="80" selection-end-line="48" selection-end-column="80" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#914#1065#0" expanded="true" />
-            <element signature="e#1064#1065#0" expanded="true" />
+            <element signature="e#41#765#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="128" selection-start-line="22" selection-start-column="128" selection-end-line="22" selection-end-column="128" />
         </state>
       </provider>
     </entry>

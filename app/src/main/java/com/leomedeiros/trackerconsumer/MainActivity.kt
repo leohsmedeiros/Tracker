@@ -15,9 +15,11 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.provider.Settings
-import mad.location.manager.lib.utils.Logger
-import mad.location.manager.lib.Interfaces.LocationServiceInterface
-import mad.location.manager.lib.Tracker
+import br.com.phonetracker.lib.Interfaces.LocationServiceInterface
+import br.com.phonetracker.lib.Services.LocationService
+import br.com.phonetracker.lib.Services.ServicesHelper
+import br.com.phonetracker.lib.utils.Logger
+import br.com.phonetracker.lib.Tracker
 
 
 class MainActivity : AppCompatActivity(), LocationServiceInterface {
@@ -38,10 +40,13 @@ class MainActivity : AppCompatActivity(), LocationServiceInterface {
                         Logger.d("AllPermissionsGranted")
 
                         tracker = Tracker.Builder(this@MainActivity, resources.getXml(R.xml.aws_iot_settings))
+                            .kalmanSettings(resources.getXml(R.xml.kalman_settings))
                             .restartIfKilled(true)
                             .build()
 
                         tracker.startTracking()
+
+                        ServicesHelper.addLocationServiceInterface(this@MainActivity)
 
                     } else {
                         openSettings()
@@ -71,8 +76,9 @@ class MainActivity : AppCompatActivity(), LocationServiceInterface {
         }
     }
 
-    override fun locationChanged(location: Location) {
-        Logger.d("locationChanged")
+    override fun locationChanged(location: Location?) {
+        Logger.d("MainActivity locationChanged: $location")
     }
+
 
 }
