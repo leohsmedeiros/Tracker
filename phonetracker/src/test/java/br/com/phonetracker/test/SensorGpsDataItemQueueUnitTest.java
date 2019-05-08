@@ -1,6 +1,6 @@
 package br.com.phonetracker.test;
 
-import br.com.phonetracker.lib.Commons.SensorGpsDataItem;
+import br.com.phonetracker.lib.commons.SensorGpsDataItem;
 
 import org.junit.Test;
 

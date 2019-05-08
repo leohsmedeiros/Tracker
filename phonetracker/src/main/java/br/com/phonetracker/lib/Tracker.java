@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.RequiresPermission;
 
-import br.com.phonetracker.lib.Interfaces.LocationServiceInterface;
-import br.com.phonetracker.lib.Services.AwsIotSettings;
-import br.com.phonetracker.lib.Services.TrackerService;
-import br.com.phonetracker.lib.utils.Logger;
-import br.com.phonetracker.lib.utils.TrackerSharedPreferences;
+import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
+import br.com.phonetracker.lib.services.AwsIotSettings;
+import br.com.phonetracker.lib.services.TrackerService;
+import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 import java.io.IOException;
 

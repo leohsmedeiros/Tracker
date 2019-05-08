@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Commons;
+package br.com.phonetracker.lib.commons;
 
 import android.support.annotation.NonNull;
 

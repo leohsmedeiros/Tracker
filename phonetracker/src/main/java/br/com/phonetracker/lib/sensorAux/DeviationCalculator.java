@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.SensorAux;
+package br.com.phonetracker.lib.sensorAux;
 
 /**
  * Created by lezh1k on 2/13/18.

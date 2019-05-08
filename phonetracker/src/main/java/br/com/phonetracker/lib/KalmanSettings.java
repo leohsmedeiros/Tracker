@@ -1,6 +1,6 @@
 package br.com.phonetracker.lib;
 
-import br.com.phonetracker.lib.Commons.Utils;
+import br.com.phonetracker.lib.commons.Utils;
 
 public class KalmanSettings {
 

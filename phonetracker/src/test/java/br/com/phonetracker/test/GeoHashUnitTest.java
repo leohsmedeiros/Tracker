@@ -1,11 +1,9 @@
 package br.com.phonetracker.test;
 
-import br.com.phonetracker.lib.Commons.GeoPoint;
-import br.com.phonetracker.lib.Filters.GeoHash;
+import br.com.phonetracker.lib.commons.GeoPoint;
+import br.com.phonetracker.lib.filters.GeoHash;
 
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

@@ -13,7 +13,7 @@
 
     <application>
         <service
-                android:name=".lib.Services.TrackerService"
+                android:name=".lib.services.TrackerService"
                 android:enabled="true"
                 android:exported="false"
                 android:stopWithTask="false" tools:ignore="InnerclassSeparator"/>

@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Commons;
+package br.com.phonetracker.lib.commons;
 
 /**
  * Created by lezh1k on 2/13/18.

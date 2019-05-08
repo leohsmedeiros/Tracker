@@ -1,6 +1,6 @@
 package br.com.phonetracker.test;
 
-import br.com.phonetracker.lib.Commons.Matrix;
+import br.com.phonetracker.lib.commons.Matrix;
 
 import org.junit.Test;
 

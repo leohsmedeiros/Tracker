@@ -1,7 +1,7 @@
 package br.com.phonetracker.test;
 
-import br.com.phonetracker.lib.Commons.Coordinates;
-import br.com.phonetracker.lib.Commons.GeoPoint;
+import br.com.phonetracker.lib.commons.Coordinates;
+import br.com.phonetracker.lib.commons.GeoPoint;
 
 import org.junit.Test;
 

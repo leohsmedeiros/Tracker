@@ -1,6 +1,6 @@
 package br.com.phonetracker.test;
 
-import br.com.phonetracker.lib.SensorAux.DeviationCalculator;
+import br.com.phonetracker.lib.sensorAux.DeviationCalculator;
 
 import org.junit.Test;
 

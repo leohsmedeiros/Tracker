@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.utils;
+package br.com.phonetracker.lib.commons;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Services;
+package br.com.phonetracker.lib.services;
 
 
 /**
@@ -28,7 +28,7 @@ import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
-import br.com.phonetracker.lib.utils.Logger;
+import br.com.phonetracker.lib.loggers.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

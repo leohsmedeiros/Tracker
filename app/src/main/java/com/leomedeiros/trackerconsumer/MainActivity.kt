@@ -13,7 +13,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import br.com.phonetracker.lib.utils.Logger
+import br.com.phonetracker.lib.loggers.Logger
 
 
 class MainActivity : AppCompatActivity() {

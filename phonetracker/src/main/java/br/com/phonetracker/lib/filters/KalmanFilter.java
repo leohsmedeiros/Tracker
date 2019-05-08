@@ -1,6 +1,6 @@
-package br.com.phonetracker.lib.Filters;
+package br.com.phonetracker.lib.filters;
 
-import br.com.phonetracker.lib.Commons.Matrix;
+import br.com.phonetracker.lib.commons.Matrix;
 
 /**
  * Created by lezh1k on 2/13/18.

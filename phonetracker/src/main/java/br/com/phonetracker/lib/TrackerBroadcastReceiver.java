@@ -15,9 +15,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import br.com.phonetracker.lib.Services.TrackerService;
-import br.com.phonetracker.lib.utils.Logger;
-import br.com.phonetracker.lib.utils.TrackerSharedPreferences;
+import br.com.phonetracker.lib.services.TrackerService;
+import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 
 public class TrackerBroadcastReceiver extends BroadcastReceiver {

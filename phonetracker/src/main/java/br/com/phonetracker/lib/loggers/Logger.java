@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.utils;
+package br.com.phonetracker.lib.loggers;
 
 import android.util.Log;
 

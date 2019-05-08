@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Interfaces;
+package br.com.phonetracker.lib.interfaces;
 
 import android.location.Location;
 

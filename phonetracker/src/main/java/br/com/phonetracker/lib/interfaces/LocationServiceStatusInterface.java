@@ -1,7 +1,7 @@
-package br.com.phonetracker.lib.Interfaces;
+package br.com.phonetracker.lib.interfaces;
 
 
-import br.com.phonetracker.lib.Services.TrackerService;
+import br.com.phonetracker.lib.services.TrackerService;
 
 /**
  * Created by lezh1k on 2/13/18.

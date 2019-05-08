@@ -1,10 +1,4 @@
-package br.com.phonetracker.lib.Commons;
-
-import br.com.phonetracker.lib.Filters.GeoHash;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package br.com.phonetracker.lib.commons;
 
 /**
  * Created by lezh1k on 2/13/18.

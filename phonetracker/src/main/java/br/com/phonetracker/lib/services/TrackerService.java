@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Services;
+package br.com.phonetracker.lib.services;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
@@ -9,16 +9,16 @@ import android.location.*;
 import android.os.*;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import br.com.phonetracker.lib.Commons.Coordinates;
-import br.com.phonetracker.lib.Commons.SensorGpsDataItem;
-import br.com.phonetracker.lib.Commons.Utils;
-import br.com.phonetracker.lib.Filters.GPSAccKalmanFilter;
-import br.com.phonetracker.lib.Interfaces.LocationServiceInterface;
-import br.com.phonetracker.lib.Interfaces.LocationServiceStatusInterface;
-import br.com.phonetracker.lib.Loggers.GeohashRTFilter;
+import br.com.phonetracker.lib.commons.Coordinates;
+import br.com.phonetracker.lib.commons.SensorGpsDataItem;
+import br.com.phonetracker.lib.commons.Utils;
+import br.com.phonetracker.lib.filters.GPSAccKalmanFilter;
+import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
+import br.com.phonetracker.lib.interfaces.LocationServiceStatusInterface;
+import br.com.phonetracker.lib.loggers.GeohashRTFilter;
 import br.com.phonetracker.lib.TrackerSettings;
-import br.com.phonetracker.lib.utils.Logger;
-import br.com.phonetracker.lib.utils.TrackerSharedPreferences;
+import br.com.phonetracker.lib.loggers.Logger;
+import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -31,12 +31,6 @@ public class TrackerService extends Service
 
 
     //region VARIABLES
-
-    //region - for KalmanFilter
-
-    private double m_magneticDeclination = 0.0;
-
-    //endregion - for KalmanFilter
 
     //region - for Sensors
     private float[] rotationMatrix = new float[16];
@@ -51,7 +45,10 @@ public class TrackerService extends Service
     private static int[] substituteSensorTypes = { Sensor.TYPE_ACCELEROMETER, Sensor.TYPE_GAME_ROTATION_VECTOR, };
 
     boolean m_sensorsEnabled = false;
+    private double m_magneticDeclination = 0.0;
     private boolean m_gpsEnabled = false;
+
+    Queue<SensorGpsDataItem> m_sensorDataQueue = new PriorityBlockingQueue<>();
     //endregion - for Sensors
 
     public enum ServiceStatus {
@@ -74,8 +71,6 @@ public class TrackerService extends Service
     GeohashRTFilter m_geoHashRTFilter = null;
     LocationManager m_locationManager;
 
-    Queue<SensorGpsDataItem> m_sensorDataQueue = new PriorityBlockingQueue<>();
-
     private TrackerTask trackerTask;
 
     static List<LocationServiceInterface> m_locationServiceInterfaces = new ArrayList<>();
@@ -83,19 +78,141 @@ public class TrackerService extends Service
 
     //endregion VARIABLES
 
-
-    public Context getContext () {
-        return this;
-    }
-
-    
+    //region Service Methods
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Logger.d("onStartCommand");
+
+        m_locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        m_sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        m_lstSensors = new ArrayList<>();
+        trackerTask = null;
+
+        if (m_sensorManager == null) {
+            m_sensorsEnabled = false;
+        }else {
+            fillSensorsList();
+        }
+
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
+
+        if (trackerSettings != null) {
+            m_sensorDataQueue.clear();
+            if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
+                m_serviceStatus = ServiceStatus.PERMISSION_DENIED;
+            } else {
+
+                m_serviceStatus = ServiceStatus.SERVICE_STARTED;
+                m_locationManager.removeGpsStatusListener(this);
+                m_locationManager.addGpsStatusListener(this);
+                m_locationManager.removeUpdates(this);
+                m_locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        trackerSettings.getKalmanSettings().getGpsMinTime(),
+                        trackerSettings.getKalmanSettings().getGpsMinDistance(),
+                        this);
+            }
+
+            m_sensorsEnabled = true;
+            for (Sensor sensor : m_lstSensors) {
+                m_sensorManager.unregisterListener(this, sensor);
+
+                m_sensorsEnabled &= !m_sensorManager.registerListener(this, sensor,
+                        Utils.hertz2periodUs(trackerSettings.getKalmanSettings().getSensorFrequencyHz()));
+            }
+            m_gpsEnabled = m_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            trackerTask = new TrackerTask(this, trackerSettings);
+            trackerTask.addObserver(this);
+            trackerTask.startTask();
+
+            for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {
+                ilss.serviceStatusChanged(m_serviceStatus);
+                ilss.GPSEnabledChanged(m_gpsEnabled);
+            }
+
+
+            // START_STICKY:  Will restart after process was killed
+            // START_NOT_STICKY:  Will not restart after process was killed
+            return (trackerSettings.getRestartIfKilled()) ? START_STICKY : START_NOT_STICKY;
+        }
+        else {
+            stopSelf();
+            return START_NOT_STICKY;
+        }
+
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Logger.d("onTaskRemoved");
+        Logger.d("stop");
+
+        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
+            m_serviceStatus = ServiceStatus.SERVICE_STOPPED;
+        }
+        else {
+            m_serviceStatus = ServiceStatus.SERVICE_PAUSED;
+            m_locationManager.removeGpsStatusListener(this);
+            m_locationManager.removeUpdates(this);
+        }
+
+        if (m_geoHashRTFilter != null) {
+            m_geoHashRTFilter.stop();
+        }
+
+        m_sensorsEnabled = false;
+        m_gpsEnabled = false;
+
+        for (Sensor sensor : m_lstSensors)
+            m_sensorManager.unregisterListener(this, sensor);
+
+        for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {
+            ilss.serviceStatusChanged(m_serviceStatus);
+            ilss.GPSEnabledChanged(m_gpsEnabled);
+        }
+
+        m_sensorDataQueue.clear();
+
+
+        trackerTask.stopTask();
+        stopSelf();
+
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
+
+        m_kalmanFilter = null;
+
+        if (trackerSettings != null) {
+            if (trackerSettings.getKalmanSettings().getGeoHashPrecision() != 0 &&
+                    trackerSettings.getKalmanSettings().getGeoHashMinPointCount() != 0) {
+
+                m_geoHashRTFilter = new GeohashRTFilter(
+                        trackerSettings.getKalmanSettings().getGeoHashPrecision(),
+                        trackerSettings.getKalmanSettings().getGeoHashMinPointCount());
+            }
+
+            if (trackerSettings.getRestartIfKilled()) {
+                Intent broadcastIntent = new Intent("uk.ac.shef.oak.ActivityRecognition.RestartSensor");
+                sendBroadcast(broadcastIntent);
+            }
+        }
+
+
+        super.onTaskRemoved(rootIntent);
+    }
+    //endregion Service Methods
+
+
+
     //try to get the sensor from sensorType, if not found try to get from substituteSensorType
+    @SuppressLint("DefaultLocale")
     private void fillSensorsList () {
         for (int i=0; i<sensorTypes.length; i++) {
             Logger.d("sensor: " + sensorTypes[i]);
@@ -117,141 +234,13 @@ public class TrackerService extends Service
         }
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Logger.d("onStartCommand");
-
-        m_locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        m_sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
-        m_lstSensors = new ArrayList<>();
-        trackerTask = null;
-
-        if (m_sensorManager == null) {
-            m_sensorsEnabled = false;
-        }else {
-            fillSensorsList();
-        }
-
-        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
-
-        if (trackerSettings != null && trackerSettings.getRestartIfKilled()) {
-            start(trackerSettings);
-
-            // Will restart after process was killed
-            return START_STICKY;
-        } else {
-
-            // Will not restart after process was killed
-            return  START_NOT_STICKY;
-        }
-    }
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        Logger.d("onTaskRemoved");
-
-        stop();
-        trackerTask.stopTask();
-        stopSelf();
-
-        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
-
-        if (trackerSettings != null && trackerSettings.getRestartIfKilled()) {
-            reset();
-            Intent broadcastIntent = new Intent("uk.ac.shef.oak.ActivityRecognition.RestartSensor");
-            sendBroadcast(broadcastIntent);
-        }
-
-        super.onTaskRemoved(rootIntent);
-    }
-
-    private void start(TrackerSettings trackerSettings) {
-//        m_wakeLock.acquire();
-
-        m_sensorDataQueue.clear();
-        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
-            m_serviceStatus = ServiceStatus.PERMISSION_DENIED;
-        } else {
-
-            m_serviceStatus = ServiceStatus.SERVICE_STARTED;
-            m_locationManager.removeGpsStatusListener(this);
-            m_locationManager.addGpsStatusListener(this);
-            m_locationManager.removeUpdates(this);
-            m_locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    trackerSettings.getKalmanSettings().getGpsMinTime(),
-                    trackerSettings.getKalmanSettings().getGpsMinDistance(),
-                    this);
-        }
-
-        m_sensorsEnabled = true;
-        for (Sensor sensor : m_lstSensors) {
-            m_sensorManager.unregisterListener(this, sensor);
-
-            m_sensorsEnabled &= !m_sensorManager.registerListener(this, sensor,
-                    Utils.hertz2periodUs(trackerSettings.getKalmanSettings().getSensorFrequencyHz()));
-        }
-        m_gpsEnabled = m_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        trackerTask = new TrackerTask(this, trackerSettings);
-        trackerTask.addObserver(this);
-        trackerTask.startTask();
-
-        for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {
-            ilss.serviceStatusChanged(m_serviceStatus);
-            ilss.GPSEnabledChanged(m_gpsEnabled);
-        }
-
-    }
-
-    private void stop() {
-        Logger.d("stop");
-
-        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
-            m_serviceStatus = ServiceStatus.SERVICE_STOPPED;
-        } else {
-            m_serviceStatus = ServiceStatus.SERVICE_PAUSED;
-            m_locationManager.removeGpsStatusListener(this);
-            m_locationManager.removeUpdates(this);
-        }
-
-        if (m_geoHashRTFilter != null) {
-            m_geoHashRTFilter.stop();
-        }
-
-        m_sensorsEnabled = false;
-        m_gpsEnabled = false;
-        for (Sensor sensor : m_lstSensors)
-            m_sensorManager.unregisterListener(this, sensor);
-
-        for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {
-            ilss.serviceStatusChanged(m_serviceStatus);
-            ilss.GPSEnabledChanged(m_gpsEnabled);
-        }
-
-        m_sensorDataQueue.clear();
-    }
-
-    private void reset() {
-        m_kalmanFilter = null;
-        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
-
-        if (trackerSettings != null) {
-            if (trackerSettings.getKalmanSettings().getGeoHashPrecision() != 0 &&
-                trackerSettings.getKalmanSettings().getGeoHashMinPointCount() != 0) {
-
-                m_geoHashRTFilter = new GeohashRTFilter(
-                        trackerSettings.getKalmanSettings().getGeoHashPrecision(),
-                        trackerSettings.getKalmanSettings().getGeoHashMinPointCount());
-            }
-        }
-    }
-
-
     public static void addInterface(LocationServiceInterface locationServiceInterface) {
         m_locationServiceInterfaces.add(locationServiceInterface);
     }
+
+    public Context getContext () { return this; }
+
+
 
     //region SensorEventListener
     @SuppressLint("MissingPermission")
@@ -441,7 +430,7 @@ public class TrackerService extends Service
     }
     //endregion GpsStatus.Listener
 
-
+    //region Observer
     @Override
     public void update(Observable observable, Object o) {
         if (o instanceof Location) {
@@ -450,5 +439,5 @@ public class TrackerService extends Service
             }
         }
     }
-
+    //endregion Observer
 }

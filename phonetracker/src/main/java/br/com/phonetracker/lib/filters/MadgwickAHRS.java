@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.Filters;
+package br.com.phonetracker.lib.filters;
 
 /**
  * Created by lezh1k on 2/13/18.

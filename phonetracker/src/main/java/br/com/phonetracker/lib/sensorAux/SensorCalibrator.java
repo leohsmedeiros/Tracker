@@ -1,4 +1,4 @@
-package br.com.phonetracker.lib.SensorAux;
+package br.com.phonetracker.lib.sensorAux;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

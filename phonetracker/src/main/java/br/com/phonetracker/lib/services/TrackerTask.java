@@ -1,15 +1,15 @@
-package br.com.phonetracker.lib.Services;
+package br.com.phonetracker.lib.services;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
-import br.com.phonetracker.lib.Commons.Coordinates;
-import br.com.phonetracker.lib.Commons.GeoPoint;
-import br.com.phonetracker.lib.Commons.SensorGpsDataItem;
-import br.com.phonetracker.lib.Commons.Utils;
+import br.com.phonetracker.lib.commons.Coordinates;
+import br.com.phonetracker.lib.commons.GeoPoint;
+import br.com.phonetracker.lib.commons.SensorGpsDataItem;
+import br.com.phonetracker.lib.commons.Utils;
 import br.com.phonetracker.lib.TrackerSettings;
-import br.com.phonetracker.lib.utils.Battery;
-import br.com.phonetracker.lib.utils.Logger;
+import br.com.phonetracker.lib.commons.Battery;
+import br.com.phonetracker.lib.loggers.Logger;
 
 import java.util.*;
 

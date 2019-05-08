@@ -1,15 +1,14 @@
-package br.com.phonetracker.lib.Loggers;
+package br.com.phonetracker.lib.loggers;
 
 import android.location.Location;
 
-import br.com.phonetracker.lib.Commons.Coordinates;
-import br.com.phonetracker.lib.Commons.GeoPoint;
-import br.com.phonetracker.lib.Commons.Utils;
-import br.com.phonetracker.lib.Filters.GeoHash;
-import br.com.phonetracker.lib.Interfaces.ILogger;
+import br.com.phonetracker.lib.commons.Coordinates;
+import br.com.phonetracker.lib.commons.GeoPoint;
+import br.com.phonetracker.lib.commons.Utils;
+import br.com.phonetracker.lib.filters.GeoHash;
+import br.com.phonetracker.lib.interfaces.ILogger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
