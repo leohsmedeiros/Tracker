@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.RequiresPermission;
 
+import br.com.phonetracker.lib.Interfaces.LocationServiceInterface;
 import br.com.phonetracker.lib.Services.AwsIotSettings;
 import br.com.phonetracker.lib.Services.TrackerService;
 import br.com.phonetracker.lib.utils.Logger;
@@ -36,12 +37,14 @@ public class Tracker {
     private Context context;
     private TrackerSettings trackerSettings;
 
-    private TrackerService trackerService;
-
     private Tracker(Context context, TrackerSettings trackerSettings) {
 //        this.context = context.getApplicationContext();
         this.context = context;
         this.trackerSettings = trackerSettings;
+    }
+
+    public void addLocationServiceInterface(LocationServiceInterface locationServiceInterface) {
+        TrackerService.addInterface(locationServiceInterface);
     }
 
 
@@ -73,13 +76,12 @@ public class Tracker {
         */
 
 
-        TrackerService trackerService = new TrackerService();
-        mServiceIntent = new Intent(context, trackerService.getClass());
+        mServiceIntent = new Intent(context, TrackerService.class);
 
-        Logger.d("isMyServiceRunning? " + (isMyServiceRunning(trackerService.getClass())));
+        Logger.d("isMyServiceRunning? " + (isMyServiceRunning()));
 
         //To not running the same service twice
-        if (!isMyServiceRunning(trackerService.getClass())) {
+        if (!isMyServiceRunning()) {
             Logger.d("startService");
             context.startService(mServiceIntent);
         }
@@ -99,11 +101,11 @@ public class Tracker {
 
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
+    private boolean isMyServiceRunning() {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (manager != null) {
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (serviceClass.getName().equals(service.service.getClassName())) {
+                if (TrackerService.class.getName().equals(service.service.getClassName())) {
                     return true;
                 }
             }
@@ -125,11 +127,6 @@ public class Tracker {
             return this;
         }
 
-        public Builder kalmanSettings (XmlResourceParser xmlKalmanSettings) throws IOException  {
-            trackerSettings.setKalmanSettings(new KalmanSettingsFactory().buildSettings(xmlKalmanSettings));
-            return this;
-        }
-
         public Builder intervalInSeconds (int intervalInSeconds) {
             trackerSettings.setIntervalInSeconds(intervalInSeconds);
             return this;
@@ -139,6 +136,29 @@ public class Tracker {
             trackerSettings.setRestartIfKilled(value);
             return this;
         }
+
+
+        //region Kalman Settings
+        public Builder gpsMinTimeInSeconds (int value) {
+            KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
+            kalmanSettings.gpsMinTime = value * 1000;
+            trackerSettings.setKalmanSettings(kalmanSettings);
+            return this;
+        }
+        public Builder gpsMinDistanceInMeters (int value) {
+            KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
+            kalmanSettings.gpsMinDistance = value;
+            trackerSettings.setKalmanSettings(kalmanSettings);
+            return this;
+        }
+        public Builder geoHashPrecision (int value) {
+            KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
+            kalmanSettings.geoHashPrecision = value;
+            trackerSettings.setKalmanSettings(kalmanSettings);
+            return this;
+        }
+        //endregion Kalman Settings
+
 
         public Tracker build () {
             return new Tracker(context, trackerSettings);

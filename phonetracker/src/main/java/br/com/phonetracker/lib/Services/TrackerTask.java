@@ -1,21 +1,22 @@
 package br.com.phonetracker.lib.Services;
 
-import android.location.GpsSatellite;
+import android.annotation.SuppressLint;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import br.com.phonetracker.lib.Commons.Coordinates;
 import br.com.phonetracker.lib.Commons.GeoPoint;
 import br.com.phonetracker.lib.Commons.SensorGpsDataItem;
 import br.com.phonetracker.lib.Commons.Utils;
+import br.com.phonetracker.lib.TrackerSettings;
+import br.com.phonetracker.lib.utils.Battery;
 import br.com.phonetracker.lib.utils.Logger;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-class TrackerTask {
+class TrackerTask extends Observable {
     //used on tracker by time
     private Timer timer;
     private int interval;
@@ -23,27 +24,29 @@ class TrackerTask {
     private TrackerService owner;
     private final String TAG = "SensorDataEventLoopTask";
 
+    private Location m_lastLocation;
 
-    TrackerTask (TrackerService owner, int timeInterval, AwsIot awsIot) {
+
+    TrackerTask (TrackerService owner, TrackerSettings trackerSettings) {
         this.owner = owner;
-//        int SEC_TIME_BASE = 1000;
-//        interval = timeInterval * SEC_TIME_BASE;
-        interval = timeInterval;
-        this.awsIot = awsIot;
-//        this.deltaTMs = deltaTMs;
+        awsIot = new AwsIot(owner.getContext(), trackerSettings.getTrackedId(), trackerSettings.getAwsIotSettings());
+        interval = trackerSettings.getIntervalInSeconds() * 1000;
     }
 
+    @SuppressLint("DefaultLocale")
     private void handlePredict(SensorGpsDataItem sdi) {
-        Logger.d(String.format("%d%d KalmanPredict : accX=%f, accY=%f",
-                Utils.LogMessageType.KALMAN_PREDICT.ordinal(),
-                (long)sdi.getTimestamp(),
-                sdi.getAbsEastAcc(),
-                sdi.getAbsNorthAcc()));
 
-        Logger.d("handlePredict");
+//        Logger.d(String.format("%d%d KalmanPredict : accX=%f, accY=%f",
+//                Utils.LogMessageType.KALMAN_PREDICT.ordinal(),
+//                (long)sdi.getTimestamp(),
+//                sdi.getAbsEastAcc(),
+//                sdi.getAbsNorthAcc()));
+//
+//        Logger.d("handlePredict");
 
         owner.m_kalmanFilter.predict(sdi.getTimestamp(), sdi.getAbsEastAcc(), sdi.getAbsNorthAcc());
     }
+    @SuppressLint("DefaultLocale")
     private void handleUpdate(SensorGpsDataItem sdi) {
         double xVel = sdi.getSpeed() * Math.cos(sdi.getCourse());
         double yVel = sdi.getSpeed() * Math.sin(sdi.getCourse());
@@ -87,8 +90,8 @@ class TrackerTask {
         loc.setElapsedRealtimeNanos(System.nanoTime());
         loc.setAccuracy((float) sdi.getPosErr());
 
-        if (owner.getGeoHashRTFilter() != null) {
-            owner.getGeoHashRTFilter().filter(loc);
+        if (owner.m_geoHashRTFilter != null) {
+            owner.m_geoHashRTFilter.filter(loc);
         }
 
         return loc;
@@ -100,37 +103,12 @@ class TrackerTask {
             return;
         }
 
-        owner.m_serviceStatus = LocationService.ServiceStatus.HAS_LOCATION;
-        owner.m_lastLocation = location;
-        owner.m_lastLocationAccuracy = location.getAccuracy();
+        owner.m_serviceStatus = TrackerService.ServiceStatus.HAS_LOCATION;
+        m_lastLocation = location;
 
         if (ActivityCompat.checkSelfPermission(owner, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
             owner.m_gpsStatus = owner.m_locationManager.getGpsStatus(owner.m_gpsStatus);
         }
-
-        int activeSatellites = 0;
-        if (owner.m_gpsStatus != null) {
-            for (GpsSatellite satellite : owner.m_gpsStatus.getSatellites()) {
-                activeSatellites += satellite.usedInFix() ? 1 : 0;
-            }
-            owner.m_activeSatellites = activeSatellites;
-        }
-
-        Logger.d("onLocationChanged");
-        owner.getAwsIot().sendPosition(location);
-
-
-//        for (LocationServiceInterface locationServiceInterface : owner.m_locationServiceInterfaces) {
-//            Logger.d("onLocationChanged.locationServiceInterface");
-//            locationServiceInterface.locationChanged(location);
-//        }
-//
-//        for (LocationServiceStatusInterface locationServiceStatusInterface : owner.m_locationServiceStatusInterfaces) {
-//            locationServiceStatusInterface.serviceStatusChanged(owner.m_serviceStatus);
-//            locationServiceStatusInterface.lastLocationAccuracyChanged(owner.m_lastLocationAccuracy);
-//            locationServiceStatusInterface.GPSStatusChanged(owner.m_activeSatellites);
-//        }
-
     }
 
 
@@ -141,27 +119,47 @@ class TrackerTask {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                SensorGpsDataItem sdi;
+                int minimunBatteryPercentage = 10;
+                int batteryPercentage = Battery.getBatteryPercentage(owner.getContext());
 
-                Logger.d("onTaskUpdate");
-                Logger.d("pool size: " + owner.m_sensorDataQueue.size());
+                if (batteryPercentage > minimunBatteryPercentage) {
+                    SensorGpsDataItem sdi;
 
-                while ((sdi = owner.m_sensorDataQueue.poll()) != null) {
+                    Logger.d("onTaskUpdate");
+                    Logger.d("pool size: " + owner.m_sensorDataQueue.size());
 
-                    if (sdi.getGpsLat() == SensorGpsDataItem.NOT_INITIALIZED) {
-                        handlePredict(sdi);
-                    } else {
-                        handleUpdate(sdi);
+                    while ((sdi = owner.m_sensorDataQueue.poll()) != null) {
+
+                        if (sdi.getGpsLat() == SensorGpsDataItem.NOT_INITIALIZED) {
+                            handlePredict(sdi);
+                        } else {
+                            handleUpdate(sdi);
+                            Location loc = locationAfterUpdateStep(sdi);
+                            onLocationChangedImp(loc);
+                        }
                     }
 
-                    Location loc = locationAfterUpdateStep(sdi);
-                    onLocationChangedImp(loc);
+                    Logger.d("onLocationChanged");
+                    awsIot.sendPosition(m_lastLocation);
+
+                    setChanged();
+                    notifyObservers(m_lastLocation);
+
+                }else {
+                    StringBuilder sb = new StringBuilder();
+                    Logger.d(sb.append("battery is too low (lower than ").append(minimunBatteryPercentage).append("%").toString());
                 }
+
+                StringBuilder sb = new StringBuilder();
+                Logger.d(sb.append("battery: ").append(batteryPercentage).append("%").toString());
+
             }
         }, interval, interval);
     }
 
     void stopTask () {
+        deleteObservers();
+
         if (timer != null) {
             timer.cancel();
             timer = null;

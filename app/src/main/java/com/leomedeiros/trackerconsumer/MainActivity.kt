@@ -3,7 +3,6 @@ package com.leomedeiros.trackerconsumer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.Manifest.permission.*
-import android.annotation.SuppressLint
 import android.util.Log
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.MultiplePermissionsReport
@@ -12,19 +11,13 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.DexterBuilder
 import com.karumi.dexter.listener.PermissionRequest
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 import android.provider.Settings
-import br.com.phonetracker.lib.Interfaces.LocationServiceInterface
-import br.com.phonetracker.lib.Services.LocationService
-import br.com.phonetracker.lib.Services.ServicesHelper
 import br.com.phonetracker.lib.utils.Logger
-import br.com.phonetracker.lib.Tracker
 
 
-class MainActivity : AppCompatActivity(), LocationServiceInterface {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var tracker: Tracker
     lateinit var dexterPermissionBuilder: DexterBuilder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,19 +27,11 @@ class MainActivity : AppCompatActivity(), LocationServiceInterface {
         dexterPermissionBuilder = Dexter.withActivity(this)
             .withPermissions(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, RECEIVE_BOOT_COMPLETED, WAKE_LOCK)
             .withListener(object : MultiplePermissionsListener {
-                @SuppressLint("MissingPermission")
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) =
                     if (report.areAllPermissionsGranted()) {
+
                         Logger.d("AllPermissionsGranted")
-
-                        tracker = Tracker.Builder(this@MainActivity, resources.getXml(R.xml.aws_iot_settings))
-                            .kalmanSettings(resources.getXml(R.xml.kalman_settings))
-                            .restartIfKilled(true)
-                            .build()
-
-                        tracker.startTracking()
-
-                        ServicesHelper.addLocationServiceInterface(this@MainActivity)
+                        startActivity(Intent(this@MainActivity, MapsActivity::class.java))
 
                     } else {
                         openSettings()
@@ -75,10 +60,5 @@ class MainActivity : AppCompatActivity(), LocationServiceInterface {
             dexterPermissionBuilder.check()
         }
     }
-
-    override fun locationChanged(location: Location?) {
-        Logger.d("MainActivity locationChanged: $location")
-    }
-
 
 }
