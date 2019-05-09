@@ -25,7 +25,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
     private lateinit var tracker: Tracker
     private lateinit var marker: Marker
     private var route: MutableList<LatLng> = mutableListOf()
-    private var isSettedToDrawRoute: Boolean = false
+    private var isStartTracking: Boolean = false
 
     var polylines: MutableList<Polyline> = ArrayList()
 
@@ -47,67 +47,72 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
             .trackedId("new Tracker")
             .intervalInSeconds(5)
             .restartIfKilled(true)
-            .gpsMinTimeInSeconds(5)
+            .gpsMinTimeInSeconds(1)
             .gpsMinDistanceInMeters(0)
             .geoHashPrecision(6)
             .build()
 
         tracker.startTracking()
 
-        val sydney = LatLng(-34.0, 151.0)
-        marker = mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( sydney, 16f ))
+        marker = mMap.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( LatLng(0.0, 0.0), 16f ))
 
         tracker.addLocationServiceInterface(this)
+
+        mMap.uiSettings.isMyLocationButtonEnabled = true
     }
 
 
     override fun locationChanged(location: Location?) {
-        this.runOnUiThread {
-            Logger.d("MainActivity locationChanged: $location")
+        Logger.d("MainActivity locationChanged: $location")
 
-            if (location is Location) {
+        if (location is Location) {
+            val position = LatLng(location.latitude, location.longitude)
 
-                val position = LatLng(location.latitude, location.longitude)
-
+            if (marker.position == LatLng(0.0, 0.0))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng( position ))
 
+            marker.position = position
+            marker.title = resources.getString(R.string.position_lbl)
+            marker.snippet = position.toString()
+            marker.showInfoWindow()
 
-                marker.position = position
-                marker.title = "position"
-                marker.snippet = position.toString()
-                marker.showInfoWindow()
+            if(isStartTracking) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng( position ))
 
-                if(isSettedToDrawRoute) {
+                if (route.size > 1) {
+                    val polylineOptions = PolylineOptions()
+                        .width(5f)
+                        .add(route.last())
+                        .add(position)
 
-                    if (route.size > 1) {
-                        val polylineOptions = PolylineOptions()
-                            .add(route.last())
-                            .add(position)
-
-                        polylines.add(mMap.addPolyline(polylineOptions))
-                    }
-
-                    route.add(position)
+                    polylines.add(mMap.addPolyline(polylineOptions))
                 }
+
+                route.add(position)
             }
         }
+    }
+
+    fun onClickToRepositionCamera (view: View) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLng( marker.position ))
     }
 
     fun onClickToDrawRoute (view: View) {
         if (view is Button) {
             route.clear()
 
-            isSettedToDrawRoute = !isSettedToDrawRoute
+            isStartTracking = !isStartTracking
 
-            polylines.forEach {
-                polyline: Polyline -> polyline.remove()
-            }
-
-            polylines.clear()
-
-            view.text = if (isSettedToDrawRoute) resources.getString(R.string.stop_tracking) else resources.getString(R.string.start_tracking)
+            view.text = if (isStartTracking) resources.getString(R.string.stop_tracking) else resources.getString(R.string.start_tracking)
         }
     }
 
+    fun onClickToClearRoute (view: View) {
+        polylines.forEach {
+                polyline: Polyline -> polyline.remove()
+        }
+
+        polylines.clear()
+    }
 }

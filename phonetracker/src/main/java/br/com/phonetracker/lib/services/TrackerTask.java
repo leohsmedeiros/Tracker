@@ -2,6 +2,7 @@ package br.com.phonetracker.lib.services;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import br.com.phonetracker.lib.commons.Coordinates;
 import br.com.phonetracker.lib.commons.GeoPoint;
@@ -17,12 +18,21 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 class TrackerTask extends Observable {
-    //used on tracker by time
-    private Timer timer;
-    private int interval;
+
+    private static final int MIN_BATTERY_PERCENTAGE = 10;
+
+
+    //used to send position to Aws IoT in background
+    private Timer timerToSendToAwsIot;
+    //used to send position to callback on UI Thread, to show positions on UI
+    private Timer timerToNotifyObservers;
+
     private AwsIot awsIot;
     private TrackerService owner;
-    private final String TAG = "SensorDataEventLoopTask";
+    private int intervalToSendToAws;
+    private int intervalToCallbackOnUiThread;
+
+//    private final String TAG = "SensorDataEventLoopTask";
 
     private Location m_lastLocation;
 
@@ -30,7 +40,8 @@ class TrackerTask extends Observable {
     TrackerTask (TrackerService owner, TrackerSettings trackerSettings) {
         this.owner = owner;
         awsIot = new AwsIot(owner.getContext(), trackerSettings.getTrackedId(), trackerSettings.getAwsIotSettings());
-        interval = trackerSettings.getIntervalInSeconds() * 1000;
+        intervalToSendToAws = trackerSettings.getIntervalInSeconds();
+        intervalToCallbackOnUiThread = trackerSettings.getKalmanSettings().getGpsMinTime();
     }
 
     @SuppressLint("DefaultLocale")
@@ -76,7 +87,7 @@ class TrackerTask extends Observable {
     }
     private Location locationAfterUpdateStep(SensorGpsDataItem sdi) {
         double xVel, yVel;
-        Location loc = new Location(TAG);
+        Location loc = new Location(LocationManager.GPS_PROVIDER);
         GeoPoint pp = Coordinates.metersToGeoPoint(owner.m_kalmanFilter.getCurrentX(), owner.m_kalmanFilter.getCurrentY());
         loc.setLatitude(pp.Latitude);
         loc.setLongitude(pp.Longitude);
@@ -98,7 +109,7 @@ class TrackerTask extends Observable {
     }
     private void onLocationChangedImp(Location location) {
         if (location == null || location.getLatitude() == 0 ||
-            location.getLongitude() == 0 || !location.getProvider().equals(TAG)) {
+            location.getLongitude() == 0 || !location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
 
             return;
         }
@@ -112,24 +123,25 @@ class TrackerTask extends Observable {
     }
 
 
-    void startTask () {
-        Logger.d("startTask");
-        timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+    /** Callback on UI thread
+     *
+     * Tracker Service in observing this Tracker Task
+     * then, when passes the time this task will notify the service
+     * and the service will callback to Activity
+     *
+     */
+    private void callbackOnUIThreadByTime (int time) {
+        timerToNotifyObservers.schedule(new TimerTask() {
             @Override
             public void run() {
-                int minimunBatteryPercentage = 10;
-                int batteryPercentage = Battery.getBatteryPercentage(owner.getContext());
-
-                if (batteryPercentage > minimunBatteryPercentage) {
-                    SensorGpsDataItem sdi;
+                if (Battery.getBatteryPercentage(owner.getContext()) > MIN_BATTERY_PERCENTAGE) {
 
                     Logger.d("onTaskUpdate");
                     Logger.d("pool size: " + owner.m_sensorDataQueue.size());
 
-                    while ((sdi = owner.m_sensorDataQueue.poll()) != null) {
+                    SensorGpsDataItem sdi;
 
+                    while ((sdi = owner.m_sensorDataQueue.poll()) != null) {
                         if (sdi.getGpsLat() == SensorGpsDataItem.NOT_INITIALIZED) {
                             handlePredict(sdi);
                         } else {
@@ -139,30 +151,56 @@ class TrackerTask extends Observable {
                         }
                     }
 
-                    Logger.d("onLocationChanged");
-                    awsIot.sendPosition(m_lastLocation);
-
                     setChanged();
                     notifyObservers(m_lastLocation);
 
                 }else {
-                    StringBuilder sb = new StringBuilder();
-                    Logger.d(sb.append("battery is too low (lower than ").append(minimunBatteryPercentage).append("%").toString());
+                    Logger.d("battery is too low (lower than " + MIN_BATTERY_PERCENTAGE + "%");
                 }
-
-                StringBuilder sb = new StringBuilder();
-                Logger.d(sb.append("battery: ").append(batteryPercentage).append("%").toString());
-
             }
-        }, interval, interval);
+        }, 0, time);
+    }
+
+    /** Send to Aws IoT in another thread
+     *
+     * This Tracker Task will evaluate if the battery is lower than minimun,
+     * if not, will try to get information Gps from sensors data list collected
+     * on Tracker Service and use the position collected with kalman filter. If Gps
+     * sensor was not initialized, will user the kalman filter to predict the position.
+     * Then, after passes the time this task will send a message to Aws IoT with the
+     * position filtered.
+     *
+     */
+    private void sendToAwsIotInBackgroundByTime (int time) {
+        timerToSendToAwsIot.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Logger.d("SEND TO AWS IoT: " + m_lastLocation);
+                awsIot.sendPosition(m_lastLocation);
+            }
+        }, 0 , time);
+    }
+
+    void startTask () {
+        Logger.d("startTask");
+
+        timerToNotifyObservers = new Timer();
+        timerToSendToAwsIot = new Timer();
+
+        callbackOnUIThreadByTime (intervalToCallbackOnUiThread);
+        sendToAwsIotInBackgroundByTime (intervalToSendToAws);
+
     }
 
     void stopTask () {
         deleteObservers();
 
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+        if (timerToSendToAwsIot != null) {
+            timerToSendToAwsIot.cancel();
+        }
+
+        if (timerToNotifyObservers != null) {
+            timerToNotifyObservers.cancel();
         }
 
         awsIot.disconnectAWSIot();

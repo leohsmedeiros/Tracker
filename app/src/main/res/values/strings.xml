@@ -1,6 +1,9 @@
 <resources>
+    <string name="content_description"/>
     <string name="app_name">TrackerConsumer</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="start_tracking">Start tracking</string>
-    <string name="stop_tracking">Stop tracking</string>
+    <string name="title_activity_maps">TrackerConsumer</string>
+    <string name="start_tracking">Start Tracking</string>
+    <string name="stop_tracking">Stop Tracking</string>
+    <string name="clear_route">Clear</string>
+    <string name="position_lbl">position</string>
 </resources>

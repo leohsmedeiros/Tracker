@@ -434,9 +434,12 @@ public class TrackerService extends Service
     @Override
     public void update(Observable observable, Object o) {
         if (o instanceof Location) {
-            for (LocationServiceInterface locationServiceInterface : m_locationServiceInterfaces) {
-                locationServiceInterface.locationChanged((Location)o);
-            }
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(() -> {
+                for (LocationServiceInterface locationServiceInterface : m_locationServiceInterfaces) {
+                    locationServiceInterface.locationChanged((Location)o);
+                }
+            });
         }
     }
     //endregion Observer
