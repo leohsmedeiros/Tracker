@@ -19,7 +19,7 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="phonetracker" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9362dcb5-7e9b-4be2-a402-d4fe2fd86e4e" name="Default Changelist" comment="">
@@ -33,13 +33,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,97 +70,35 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt">
+        <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="673">
-              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="179">
+              <caret line="37" column="24" selection-end-line="156" />
               <folding>
-                <element signature="e#41#589#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt">
+        <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="75" column="69" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="69" />
-              <folding>
-                <element signature="e#41#693#0" expanded="true" />
-                <element signature="e#2629#2671#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="90">
               <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2">
-              <caret line="152" column="13" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/aws_iot_settings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="438" column="3" selection-start-line="438" selection-start-column="3" selection-end-line="438" selection-end-column="3" />
+            <state relative-caret-position="181">
+              <caret line="241" column="69" selection-start-line="241" selection-start-column="69" selection-end-line="241" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#onTaskRemoved#0;class#TrackerService#0" />
-                <element signature="method#fillSensorsList#0;class#TrackerService#0" />
-                <element signature="method#addInterface#0;class#TrackerService#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="177" column="61" selection-start-line="177" selection-start-column="61" selection-end-line="177" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#handlePredict#0;class#TrackerTask#0" />
-                <element signature="e#1330#1403#0" />
-                <element signature="method#handleUpdate#0;class#TrackerTask#0" />
-                <element signature="method#locationAfterUpdateStep#0;class#TrackerTask#0" />
-                <element signature="e#5039#6114#0" expanded="true" />
-                <element signature="e#6113#6114#0" expanded="true" />
-                <element signature="e#6699#6864#0" expanded="true" />
-                <element signature="e#6863#6864#0" expanded="true" />
+                <element signature="e#5518#7437#0" />
+                <element signature="e#7477#8475#0" />
               </folding>
             </state>
           </provider>
@@ -180,7 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>m_locationServiceStatusInterfaces</find>
       <find>m_locationServiceInterfaces</find>
       <find>m_settings</find>
       <find>awsIot</find>
@@ -210,6 +145,7 @@
       <find>stop(</find>
       <find>intervalToSendToAws</find>
       <find>TAG</find>
+      <find>addInterface</find>
     </findStrings>
     <replaceStrings>
       <replace>Logger.d</replace>
@@ -257,7 +193,6 @@
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/LocationService.java" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Interfaces/LocationServiceStatusInterface.java" />
         <option value="$PROJECT_DIR$/phonetracker/build.gradle" />
-        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/utils/TrackerSharedPreferences.java" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerBroadcastReceiver.java" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerTask.java" />
@@ -265,18 +200,19 @@
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Services/TrackerService.java" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/commons/TrackerSharedPreferences.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt" />
-        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java" />
         <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java" />
-        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt" />
+        <option value="$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1440" />
+    <option name="width" value="648" />
     <option name="height" value="797" />
   </component>
   <component name="ProjectView">
@@ -284,9 +220,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -301,30 +234,25 @@
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="trackerconsumer" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="xml" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
               <item name="phonetracker" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lib" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
+              <item name="phonetracker" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lib" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tracker" type="1abcf292:AndroidViewProjectNode" />
@@ -334,11 +262,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="device.picker.selection" value="J5AKB600K5963JV" />
+    <property name="device.picker.selection" value="ZY322HGWMF" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
@@ -439,10 +370,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
+    <frame x="0" y="23" width="648" height="797" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.3297568" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.52640265" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -451,7 +383,7 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Logcat" order="1" visible="true" weight="0.32907802" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" />
@@ -692,26 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="438" column="3" selection-start-line="438" selection-start-column="3" selection-end-line="438" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onTaskRemoved#0;class#TrackerService#0" />
-            <element signature="method#fillSensorsList#0;class#TrackerService#0" />
-            <element signature="method#addInterface#0;class#TrackerService#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-26/android.jar!/android/location/Location.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -723,41 +635,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="177" column="61" selection-start-line="177" selection-start-column="61" selection-end-line="177" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#handlePredict#0;class#TrackerTask#0" />
-            <element signature="e#1330#1403#0" />
-            <element signature="method#handleUpdate#0;class#TrackerTask#0" />
-            <element signature="method#locationAfterUpdateStep#0;class#TrackerTask#0" />
-            <element signature="e#5039#6114#0" expanded="true" />
-            <element signature="e#6113#6114#0" expanded="true" />
-            <element signature="e#6699#6864#0" expanded="true" />
-            <element signature="e#6863#6864#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/aws_iot_settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="152" column="13" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MainActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
+        <state relative-caret-position="765">
           <caret line="64" selection-start-line="64" selection-end-line="64" />
           <folding>
             <element signature="e#41#589#0" expanded="true" />
@@ -768,18 +648,27 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
       <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="315">
+        <state relative-caret-position="630">
           <caret line="42" selection-start-line="42" selection-end-line="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/aws_iot_settings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="75" column="69" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="69" />
+        <state relative-caret-position="120">
+          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="177" column="61" selection-start-line="177" selection-start-column="61" selection-end-line="177" selection-end-column="61" />
           <folding>
-            <element signature="e#41#693#0" expanded="true" />
-            <element signature="e#2629#2671#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#handlePredict#0;class#TrackerTask#0" />
+            <element signature="method#handleUpdate#0;class#TrackerTask#0" />
+            <element signature="method#locationAfterUpdateStep#0;class#TrackerTask#0" />
           </folding>
         </state>
       </provider>
@@ -788,6 +677,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/leomedeiros/trackerconsumer/MapsActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+          <folding>
+            <element signature="e#41#693#0" expanded="true" />
+            <element signature="e#2629#2671#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/Tracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="37" column="24" selection-end-line="156" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/TrackerSettings.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phonetracker/src/main/java/br/com/phonetracker/lib/services/TrackerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="241" column="69" selection-start-line="241" selection-start-column="69" selection-end-line="241" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5518#7437#0" />
+            <element signature="e#7477#8475#0" />
+          </folding>
         </state>
       </provider>
     </entry>

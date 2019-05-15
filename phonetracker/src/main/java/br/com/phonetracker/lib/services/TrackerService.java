@@ -238,6 +238,10 @@ public class TrackerService extends Service
         m_locationServiceInterfaces.add(locationServiceInterface);
     }
 
+    public static void removeInterface(LocationServiceInterface locationServiceInterface) {
+        m_locationServiceInterfaces.remove(locationServiceInterface);
+    }
+
     public Context getContext () { return this; }
 
 

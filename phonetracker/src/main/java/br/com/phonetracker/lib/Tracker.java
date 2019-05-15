@@ -39,7 +39,6 @@ public class Tracker {
     private TrackerSettings trackerSettings;
 
     private Tracker(Context context, TrackerSettings trackerSettings) {
-//        this.context = context.getApplicationContext();
         this.context = context;
         this.trackerSettings = trackerSettings;
     }
@@ -48,34 +47,13 @@ public class Tracker {
         TrackerService.addInterface(locationServiceInterface);
     }
 
-
-//    public void restartTracking () {
-//        this.awsIot.connectAWSIot();
-//    }
-//
-//    public void stopTracking () {
-//        this.awsIot.disconnectAWSIot();
-//    }
+    public void removeLocationServiceInterface(LocationServiceInterface locationServiceInterface) {
+        TrackerService.removeInterface(locationServiceInterface);
+    }
 
     @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION})
     public void startTracking () {
         TrackerSharedPreferences.save(context, trackerSettings);
-
-        /*
-        ServicesHelper.getLocationService(context, value -> {
-
-            Logger.d("getLocationService");
-            if (!value.IsRunning()) {
-                Logger.d("not running");
-                value.stop();
-                value.reset(trackerSettings.getKalmanSettings()); //warning!! here you can adjust your filter behavior
-                value.start();
-            }else {
-                Logger.d("is running");
-            }
-        });
-        */
-
 
         mServiceIntent = new Intent(context, TrackerService.class);
 
@@ -90,10 +68,6 @@ public class Tracker {
 
     public void stopTracking () {
         TrackerSharedPreferences.remove(context, trackerSettings.getClass());
-
-        /*
-        ServicesHelper.getLocationService().stop();
-        */
 
         if(mServiceIntent!=null) {
             context.stopService(mServiceIntent);
