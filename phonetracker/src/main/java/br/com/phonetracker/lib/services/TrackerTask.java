@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityCompat;
 import br.com.phonetracker.lib.commons.Coordinates;
 import br.com.phonetracker.lib.commons.GeoPoint;
 import br.com.phonetracker.lib.commons.SensorGpsDataItem;
-import br.com.phonetracker.lib.commons.Utils;
 import br.com.phonetracker.lib.TrackerSettings;
 import br.com.phonetracker.lib.commons.Battery;
 import br.com.phonetracker.lib.commons.Logger;
@@ -39,7 +38,7 @@ class TrackerTask extends Observable {
 
     TrackerTask (TrackerService owner, TrackerSettings trackerSettings) {
         this.owner = owner;
-        awsIot = new AwsIot(owner.getContext(), trackerSettings.getTrackedId(), trackerSettings.getAwsIotSettings());
+        awsIot = new AwsIot(owner.getContext(), trackerSettings.getAwsIotSettings());
         intervalToSendToAws = trackerSettings.getIntervalInSeconds();
         intervalToCallbackOnUiThread = trackerSettings.getKalmanSettings().getGpsMinTime();
     }
@@ -62,18 +61,18 @@ class TrackerTask extends Observable {
         double xVel = sdi.getSpeed() * Math.cos(sdi.getCourse());
         double yVel = sdi.getSpeed() * Math.sin(sdi.getCourse());
 
-        Logger.d("handleUpdate");
-
-        Logger.d(String.format("%d%d KalmanUpdate : pos lon=%f, lat=%f, xVel=%f, yVel=%f, posErr=%f, velErr=%f",
-                Utils.LogMessageType.KALMAN_UPDATE.ordinal(),
-                (long)sdi.getTimestamp(),
-                sdi.getGpsLon(),
-                sdi.getGpsLat(),
-                xVel,
-                yVel,
-                sdi.getPosErr(),
-                sdi.getVelErr()
-        ));
+//        Logger.d("handleUpdate");
+//
+//        Logger.d(String.format("%d%d KalmanUpdate : pos lon=%f, lat=%f, xVel=%f, yVel=%f, posErr=%f, velErr=%f",
+//                Utils.LogMessageType.KALMAN_UPDATE.ordinal(),
+//                (long)sdi.getTimestamp(),
+//                sdi.getGpsLon(),
+//                sdi.getGpsLat(),
+//                xVel,
+//                yVel,
+//                sdi.getPosErr(),
+//                sdi.getVelErr()
+//        ));
 
         owner.m_kalmanFilter.update(
                 sdi.getTimestamp(),
@@ -136,8 +135,8 @@ class TrackerTask extends Observable {
             public void run() {
                 if (Battery.getBatteryPercentage(owner.getContext()) > MIN_BATTERY_PERCENTAGE) {
 
-                    Logger.d("onTaskUpdate");
-                    Logger.d("pool size: " + owner.m_sensorDataQueue.size());
+//                    Logger.d("onTaskUpdate");
+//                    Logger.d("pool size: " + owner.m_sensorDataQueue.size());
 
                     SensorGpsDataItem sdi;
 
@@ -175,14 +174,14 @@ class TrackerTask extends Observable {
         timerToSendToAwsIot.schedule(new TimerTask() {
             @Override
             public void run() {
-                Logger.d("SEND TO AWS IoT: " + m_lastLocation);
+//                Logger.d("SEND TO AWS IoT: " + m_lastLocation);
                 awsIot.sendPosition(m_lastLocation);
             }
         }, 0 , time);
     }
 
     void startTask () {
-        Logger.d("startTask");
+//        Logger.d("startTask");
 
         timerToNotifyObservers = new Timer();
         timerToSendToAwsIot = new Timer();

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.amazonaws:aws-android-sdk-iot:2.13.4@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d04590bce0ae3928b5d9ecc041ef7463/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d04590bce0ae3928b5d9ecc041ef7463/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3f4c1f7657910e4551fdeb4c684d38f9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3f4c1f7657910e4551fdeb4c684d38f9/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -8,6 +8,8 @@ public class GeoPoint {
     public double Latitude;
     public double Longitude;
 
+    private GeoPoint() { this.Latitude = 0; this.Longitude = 0; }
+
     public GeoPoint(double latitude, double longitude) {
         Latitude = latitude;
         Longitude = longitude;

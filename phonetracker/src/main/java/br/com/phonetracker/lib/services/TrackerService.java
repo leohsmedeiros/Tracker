@@ -26,11 +26,13 @@ import java.util.concurrent.PriorityBlockingQueue;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+
 public class TrackerService extends Service
         implements SensorEventListener, LocationListener, GpsStatus.Listener, Observer {
 
-
     //region VARIABLES
+
+    public static TrackerService runningInstance;
 
     //region - for Sensors
     private float[] rotationMatrix = new float[16];
@@ -79,6 +81,7 @@ public class TrackerService extends Service
     //endregion VARIABLES
 
     //region Service Methods
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -87,7 +90,8 @@ public class TrackerService extends Service
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Logger.d("onStartCommand");
+        Logger.e("onStartCommand");
+        runningInstance = this;
 
         m_locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         m_sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -141,7 +145,7 @@ public class TrackerService extends Service
 
             // START_STICKY:  Will restart after process was killed
             // START_NOT_STICKY:  Will not restart after process was killed
-            return (trackerSettings.getRestartIfKilled()) ? START_STICKY : START_NOT_STICKY;
+            return (trackerSettings.getShouldRestartIfKilled()) ? START_STICKY : START_NOT_STICKY;
         }
         else {
             stopSelf();
@@ -150,10 +154,8 @@ public class TrackerService extends Service
 
     }
 
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        Logger.d("onTaskRemoved");
-        Logger.d("stop");
+    private void stop () {
+        runningInstance = null;
 
         if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
             m_serviceStatus = ServiceStatus.SERVICE_STOPPED;
@@ -181,9 +183,8 @@ public class TrackerService extends Service
 
         m_sensorDataQueue.clear();
 
-
-        trackerTask.stopTask();
-        stopSelf();
+        if (trackerTask != null)
+            trackerTask.stopTask();
 
         TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
 
@@ -198,12 +199,25 @@ public class TrackerService extends Service
                         trackerSettings.getKalmanSettings().getGeoHashMinPointCount());
             }
 
-            if (trackerSettings.getRestartIfKilled()) {
+            if (trackerSettings.getShouldRestartIfKilled()) {
                 Intent broadcastIntent = new Intent("uk.ac.shef.oak.ActivityRecognition.RestartSensor");
                 sendBroadcast(broadcastIntent);
             }
         }
+    }
 
+    @Override
+    public void onDestroy() {
+        Logger.e("onDestroy");
+        stop();
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Logger.e("onTaskRemoved");
+        stop();
 
         super.onTaskRemoved(rootIntent);
     }
@@ -215,34 +229,30 @@ public class TrackerService extends Service
     @SuppressLint("DefaultLocale")
     private void fillSensorsList () {
         for (int i=0; i<sensorTypes.length; i++) {
-            Logger.d("sensor: " + sensorTypes[i]);
             Sensor sensor = m_sensorManager.getDefaultSensor(sensorTypes[i]);
             if (sensor == null) {
-                Logger.d(String.format("TrackerService - Couldn't get sensor %d", sensorTypes[i]));
-
                 sensor = m_sensorManager.getDefaultSensor(substituteSensorTypes[i]);
-                Logger.d("sensor: " + substituteSensorTypes[i]);
                 if (sensor == null) {
-                    Logger.d(String.format("TrackerService - Couldn't get substitute sensor %d", substituteSensorTypes[i]));
                     continue;
                 }
             }
-
-            Logger.d(String.format("TrackerService - Get sensor %d", sensor.getType()));
 
             m_lstSensors.add(sensor);
         }
     }
 
     public static void addInterface(LocationServiceInterface locationServiceInterface) {
-        m_locationServiceInterfaces.add(locationServiceInterface);
+        if (!m_locationServiceInterfaces.contains(locationServiceInterface))
+            m_locationServiceInterfaces.add(locationServiceInterface);
     }
 
     public static void removeInterface(LocationServiceInterface locationServiceInterface) {
         m_locationServiceInterfaces.remove(locationServiceInterface);
     }
 
-    public Context getContext () { return this; }
+    public Context getContext () {
+        return this;
+    }
 
 
 
@@ -312,6 +322,10 @@ public class TrackerService extends Service
     @SuppressLint("DefaultLocale")
     @Override
     public void onLocationChanged(Location loc) {
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
+        if (trackerSettings == null) {
+            this.stopSelf();
+        }
 
         if (loc == null) {
             return;
@@ -331,12 +345,12 @@ public class TrackerService extends Service
         // and loc.getSpeedAccuracyMetersPerSecond() requares API 26
         double velErr = loc.getAccuracy() * 0.1;
 
-        String logStr = String.format("%d%d GPS : pos lat=%f, lon=%f, alt=%f, hdop=%f, speed=%f, bearing=%f, sa=%f",
-                Utils.LogMessageType.GPS_DATA.ordinal(),
-                timeStamp, loc.getLatitude(),
-                loc.getLongitude(), loc.getAltitude(), loc.getAccuracy(),
-                loc.getSpeed(), loc.getBearing(), velErr);
-        Logger.d(logStr);
+//        String logStr = String.format("%d%d GPS : pos lat=%f, lon=%f, alt=%f, hdop=%f, speed=%f, bearing=%f, sa=%f",
+//                Utils.LogMessageType.GPS_DATA.ordinal(),
+//                timeStamp, loc.getLatitude(),
+//                loc.getLongitude(), loc.getAltitude(), loc.getAccuracy(),
+//                loc.getSpeed(), loc.getBearing(), velErr);
+//        Logger.d(logStr);
 
         GeomagneticField f = new GeomagneticField(
                 (float)loc.getLatitude(),
@@ -346,26 +360,21 @@ public class TrackerService extends Service
         m_magneticDeclination = f.getDeclination();
 
         if (m_kalmanFilter == null) {
-            TrackerSettings trackerSettings = TrackerSharedPreferences.load(this, TrackerSettings.class);
+//                Logger.d(String.format("%d%d KalmanAlloc : lon=%f, lat=%f, speed=%f, course=%f, m_accDev=%f, posDev=%f",
+//                        Utils.LogMessageType.KALMAN_ALLOC.ordinal(),
+//                        timeStamp, x, y, speed, course, trackerSettings.getKalmanSettings().getAccelerationDeviation(), posDev));
 
-            if (trackerSettings != null) {
-
-                Logger.d(String.format("%d%d KalmanAlloc : lon=%f, lat=%f, speed=%f, course=%f, m_accDev=%f, posDev=%f",
-                        Utils.LogMessageType.KALMAN_ALLOC.ordinal(),
-                        timeStamp, x, y, speed, course, trackerSettings.getKalmanSettings().getAccelerationDeviation(), posDev));
-
-                m_kalmanFilter = new GPSAccKalmanFilter(
-                        false, //todo move to settings
-                        Coordinates.longitudeToMeters(x),
-                        Coordinates.latitudeToMeters(y),
-                        xVel,
-                        yVel,
-                        trackerSettings.getKalmanSettings().getAccelerationDeviation(),
-                        posDev,
-                        timeStamp,
-                        trackerSettings.getKalmanSettings().getmVelFactor(),
-                        trackerSettings.getKalmanSettings().getmPosFactor());
-            }
+            m_kalmanFilter = new GPSAccKalmanFilter(
+                    false, //todo move to settings
+                    Coordinates.longitudeToMeters(x),
+                    Coordinates.latitudeToMeters(y),
+                    xVel,
+                    yVel,
+                    trackerSettings.getKalmanSettings().getAccelerationDeviation(),
+                    posDev,
+                    timeStamp,
+                    trackerSettings.getKalmanSettings().getmVelFactor(),
+                    trackerSettings.getKalmanSettings().getmPosFactor());
             return;
         }
 
@@ -390,7 +399,6 @@ public class TrackerService extends Service
 
     @Override
     public void onProviderEnabled(String provider) {
-        Logger.d("onProviderEnabled: " + provider);
         if (provider.equals(LocationManager.GPS_PROVIDER)) {
             m_gpsEnabled = true;
             for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {
@@ -401,7 +409,6 @@ public class TrackerService extends Service
 
     @Override
     public void onProviderDisabled(String provider) {
-        Logger.d("onProviderDisabled: " + provider);
         if (provider.equals(LocationManager.GPS_PROVIDER)) {
             m_gpsEnabled = false;
             for (LocationServiceStatusInterface ilss : m_locationServiceStatusInterfaces) {

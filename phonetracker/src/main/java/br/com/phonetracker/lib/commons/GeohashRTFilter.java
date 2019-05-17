@@ -47,10 +47,11 @@ public class GeohashRTFilter {
 
     public GeohashRTFilter(int geohashPrecision,
                            int geohashMinPointCount) {
+
         m_geohashPrecision = geohashPrecision;
         m_geohashMinPointCount = geohashMinPointCount;
         m_geoFilteredTrack = new ArrayList<>();
-        reset(null);
+        reset();
     }
 
     public double getDistanceGeoFiltered() {
@@ -66,10 +67,7 @@ public class GeohashRTFilter {
         return m_distanceAsIsHP;
     }
 
-    private ILogger m_logger;
-
-    public void reset(ILogger logger) {
-        m_logger = logger;
+    public void reset() {
         m_geoFilteredTrack.clear();
         geoHashBuffers = new long[2];
         pointsInCurrentGeohashCount = 0;
@@ -86,13 +84,13 @@ public class GeohashRTFilter {
     private float hpResBuffGeo[] = new float[3];
 
     public void filter(Location loc) {
-        if (m_logger != null) {
-            String toLog = String.format("%d%d FKS : lat=%f, lon=%f, alt=%f",
-                    Utils.LogMessageType.FILTERED_GPS_DATA.ordinal(),
-                    loc.getTime(),
-                    loc.getLatitude(), loc.getLongitude(), loc.getAltitude());
-            m_logger.log2file(toLog);
-        }
+//        if (m_logger != null) {
+//            String toLog = String.format("%d%d FKS : lat=%f, lon=%f, alt=%f",
+//                    Utils.LogMessageType.FILTERED_GPS_DATA.ordinal(),
+//                    loc.getTime(),
+//                    loc.getLatitude(), loc.getLongitude(), loc.getAltitude());
+//            m_logger.log2file(toLog);
+//        }
 
         GeoPoint pi = new GeoPoint(loc.getLatitude(), loc.getLongitude());
         if (isFirstCoordinate) {

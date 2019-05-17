@@ -12,6 +12,7 @@
     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
     <application>
+
         <service
                 android:name=".lib.services.TrackerService"
                 android:enabled="true"
@@ -27,8 +28,9 @@
                 <action android:name="uk.ac.shef.oak.ActivityRecognition.RestartSensor"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
-
         </receiver>
+
     </application>
+
 </manifest>
 

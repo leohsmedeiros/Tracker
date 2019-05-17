@@ -20,8 +20,10 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.XmlResourceParser;
+import android.location.Location;
 import android.support.annotation.RequiresPermission;
 
+import br.com.phonetracker.lib.commons.GeohashRTFilter;
 import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
 import br.com.phonetracker.lib.services.AwsIotSettings;
 import br.com.phonetracker.lib.services.TrackerService;
@@ -30,17 +32,34 @@ import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.Manifest.permission.*;
 
-public class Tracker {
-    private Intent mServiceIntent;
+public class Tracker implements LocationServiceInterface {
+    public interface GeoHashFilterLocationListener {
+        void onGeoHashFilterUpdate (List<Location> locationsFiltered);
+    }
+
+
+    private List<GeoHashFilterLocationListener> listenersToGeohash;
     private Context context;
     private TrackerSettings trackerSettings;
+    private GeohashRTFilter m_geoHashRTFilter;
+
 
     private Tracker(Context context, TrackerSettings trackerSettings) {
         this.context = context;
+        this.listenersToGeohash = new ArrayList<>();
         this.trackerSettings = trackerSettings;
+        TrackerSharedPreferences.save(context, trackerSettings);
+
+        KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
+
+        m_geoHashRTFilter = new GeohashRTFilter(kalmanSettings.getGeoHashPrecision(),
+                                                kalmanSettings.getGeoHashMinPointCount());
+
     }
 
     public void addLocationServiceInterface(LocationServiceInterface locationServiceInterface) {
@@ -51,32 +70,74 @@ public class Tracker {
         TrackerService.removeInterface(locationServiceInterface);
     }
 
+    public void addListenerToGeohash(GeoHashFilterLocationListener listener) {
+        if(!listenersToGeohash.contains(listener))
+            listenersToGeohash.add(listener);
+    }
+
+    public void removeListenerToGeohash(GeoHashFilterLocationListener listener) {
+        listenersToGeohash.remove(listener);
+    }
+
+    public void changeTrackerId (String trackerID) {
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
+
+        if (trackerSettings != null) {
+            trackerSettings.setTrackedId(trackerID);
+            TrackerSharedPreferences.save(context, trackerSettings);
+        }
+    }
+
     @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION})
     public void startTracking () {
-        TrackerSharedPreferences.save(context, trackerSettings);
+        if (trackerSettings != null) {
+            TrackerSharedPreferences.save(context, trackerSettings);
+        }
 
-        mServiceIntent = new Intent(context, TrackerService.class);
+        Intent mServiceIntent = new Intent(context, TrackerService.class);
 
-        Logger.d("isMyServiceRunning? " + (isMyServiceRunning()));
+        Logger.d("isServiceRunning? " + (isServiceRunning()));
 
         //To not running the same service twice
-        if (!isMyServiceRunning()) {
+        if (!isServiceRunning()) {
             Logger.d("startService");
             context.startService(mServiceIntent);
         }
+
+        m_geoHashRTFilter.reset();
+        TrackerService.addInterface(this);
     }
 
     public void stopTracking () {
-        TrackerSharedPreferences.remove(context, trackerSettings.getClass());
+        Logger.e("stopTracking");
 
-        if(mServiceIntent!=null) {
-            context.stopService(mServiceIntent);
-            Logger.d("onDestroy Tracker!");
+        if (TrackerService.runningInstance != null) {
+
+            Logger.e("runningInstance != null");
+
+            TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
+
+            if (trackerSettings != null) {
+                trackerSettings.setShouldRestartIfKilled(false);
+                TrackerSharedPreferences.save(context, trackerSettings);
+            }
+
+            TrackerService.runningInstance.stopSelf();
+
+            TrackerSharedPreferences.remove(context, TrackerSettings.class);
+
+//            context.stopService(mServiceIntent);
+        }else {
+
+            Logger.e("runningInstance == null");
+
         }
 
+        m_geoHashRTFilter.stop();
+        TrackerService.removeInterface(this);
     }
 
-    private boolean isMyServiceRunning() {
+    public boolean isServiceRunning() {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (manager != null) {
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -86,6 +147,15 @@ public class Tracker {
             }
         }
         return false;
+    }
+
+    @Override
+    public void locationChanged(Location location) {
+        m_geoHashRTFilter.filter(location);
+
+        for (GeoHashFilterLocationListener listener : listenersToGeohash) {
+            listener.onGeoHashFilterUpdate(m_geoHashRTFilter.getGeoFilteredTrack());
+        }
     }
 
     public static class Builder {
@@ -102,12 +172,7 @@ public class Tracker {
             return this;
         }
 
-        public Builder restartIfKilled(boolean value) {
-            trackerSettings.setRestartIfKilled(value);
-            return this;
-        }
-
-        public Builder intervalInSeconds (int intervalInSeconds) throws IllegalArgumentException {
+        public Builder intervalInSecondsToSendLocation(int intervalInSeconds) throws IllegalArgumentException {
             if (intervalInSeconds < 0)
                 throw new IllegalArgumentException("Min interval to send to IoT is 0");
 
@@ -115,6 +180,20 @@ public class Tracker {
             return this;
         }
 
+        public Builder enableRestartIfKilled () {
+            trackerSettings.setShouldRestartIfKilled(true);
+            return this;
+        }
+
+        public Builder enableToSendSpeed () {
+            trackerSettings.setShouldSendSpeed(true);
+            return this;
+        }
+
+        public Builder enableToSendDirection () {
+            trackerSettings.setShouldSendDirection(true);
+            return this;
+        }
 
         //region Kalman Settings
         public Builder gpsMinTimeInSeconds (int value) throws IllegalArgumentException {
@@ -126,6 +205,7 @@ public class Tracker {
             trackerSettings.setKalmanSettings(kalmanSettings);
             return this;
         }
+
         public Builder gpsMinDistanceInMeters (int value) throws IllegalArgumentException {
             if (value < 0)
                 throw new IllegalArgumentException("Min distance to Gps distance is 0");
@@ -135,6 +215,7 @@ public class Tracker {
             trackerSettings.setKalmanSettings(kalmanSettings);
             return this;
         }
+
         public Builder geoHashPrecision (int value) throws IllegalArgumentException {
             if (value < 1)
                 throw new IllegalArgumentException("Min Geo Hash precision is 1");
@@ -146,10 +227,10 @@ public class Tracker {
         }
         //endregion Kalman Settings
 
-
         public Tracker build () {
             return new Tracker(context, trackerSettings);
         }
+
     }
 
 

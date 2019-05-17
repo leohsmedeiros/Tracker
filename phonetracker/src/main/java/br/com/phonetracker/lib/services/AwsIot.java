@@ -15,6 +15,8 @@ package br.com.phonetracker.lib.services;
 import android.content.Context;
 import android.location.Location;
 
+import br.com.phonetracker.lib.TrackerSettings;
+import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
@@ -45,12 +47,9 @@ class AwsIot {
     private AWSIotMqttManager mqttManager;
     private Context context;
 
-    private String trackedId;
-
-    AwsIot(Context context, String trackedId, AwsIotSettings settings) {
+    AwsIot(Context context, AwsIotSettings settings) {
         this.context = context;
         this.settings = settings;
-        this.trackedId = trackedId;
 
 
         AWSMobileClient.getInstance().initialize(this.context, new Callback<UserStateDetails>() {
@@ -65,7 +64,7 @@ class AwsIot {
     private void initIoTClient() {
 
         clientId = UUID.randomUUID().toString();
-        Logger.d("initIoTClient whit ID: " + clientId);
+//        Logger.d("initIoTClient whit ID: " + clientId);
 
         // MQTT Client
         mqttManager = new AWSIotMqttManager(clientId, settings.getCustomerSpecificEndpoint());
@@ -167,7 +166,7 @@ class AwsIot {
         }
     }
 
-    void connectAWSIot() {
+    private void connectAWSIot() {
         Logger.d("clientId = " + clientId);
 
         try {
@@ -198,17 +197,31 @@ class AwsIot {
             return;
         }
 
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
+
+        if (trackerSettings == null) {
+            Logger.e("trackerSettings is null");
+            return;
+        }
+
+
         JSONObject telemetric = new JSONObject();
         JSONArray cordenadas = new JSONArray();
         try {
 
             cordenadas.put(location.getLongitude());
             cordenadas.put(location.getLatitude());
+
             telemetric.put("coordinates", cordenadas);
-            telemetric.put("speed", location.getSpeed());
-            telemetric.put("direction", location.getBearing());
-            if (trackedId != null)
-                telemetric.put("trackedId", trackedId);
+
+            if (trackerSettings.getShouldSendSpeed())
+                telemetric.put("speed", location.getSpeed());
+
+            if (trackerSettings.getShouldSendDirection())
+                telemetric.put("direction", location.getBearing());
+
+            if (trackerSettings.getTrackedId() != null)
+                telemetric.put("trackedId", trackerSettings.getTrackedId());
 
         } catch (JSONException e) {
             e.printStackTrace();

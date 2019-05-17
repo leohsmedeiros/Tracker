@@ -13,7 +13,6 @@ package br.com.phonetracker.lib;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import br.com.phonetracker.lib.services.TrackerService;
 import br.com.phonetracker.lib.commons.Logger;
@@ -24,15 +23,12 @@ public class TrackerBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Logger.d("Service Stops! Oooooooooooooppppssssss!!!!");
+        Logger.d("*************   TrackerBroadcastReceiver   *************");
+        TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
 
-        //Not allowed to start service in Background if api version is higher than 26
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
-
-            if (trackerSettings != null && trackerSettings.getRestartIfKilled()) {
-                context.startService(new Intent(context, TrackerService.class));
-            }
+        if (trackerSettings != null && trackerSettings.getShouldRestartIfKilled()) {
+            context.startService(new Intent(context, TrackerService.class));
+            Logger.d("restarting service");
         }
     }
 
