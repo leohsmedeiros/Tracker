@@ -1,213 +1,187 @@
 package br.com.phonetracker.lib;
 
-
 /**
  * TRACKER
- *
- * Init a background service to send the device position using an Aws Iot API.
- *
+ * <p>
+ * Init a background service to send the device location.
+ * <p>
  * Can be configured to restart automatically if user kills the app.
- *
- * Can also restart if Android Api level is lower than 26, because on higher Api levels there's a security
- * component that kill the service anyway.
- *
+ * <p>
+ * Can also restart if user reboot the device, but only if Android Api level is lower than 26,
+ * because on higher Api levels there's a security component that kill the service anyway.
  *
  * @author Leonardo Medeiros
  */
 
-
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.XmlResourceParser;
-import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 
-import br.com.phonetracker.lib.commons.GeohashRTFilter;
-import br.com.phonetracker.lib.interfaces.LocationServiceInterface;
-import br.com.phonetracker.lib.services.AwsIotSettings;
-import br.com.phonetracker.lib.services.TrackerService;
+import br.com.phonetracker.lib.commons.KalmanSettings;
 import br.com.phonetracker.lib.commons.Logger;
 import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
-import org.jetbrains.annotations.NotNull;
+import br.com.phonetracker.lib.interfaces.GeoHashFilterLocationListener;
+import br.com.phonetracker.lib.interfaces.LocationTrackerListener;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.KILL_BACKGROUND_PROCESSES;
 
-import static android.Manifest.permission.*;
+public class Tracker {
 
-public class Tracker implements LocationServiceInterface {
-    public interface GeoHashFilterLocationListener {
-        void onGeoHashFilterUpdate (List<Location> locationsFiltered);
-    }
-
-
-    private List<GeoHashFilterLocationListener> listenersToGeohash;
     private Context context;
     private TrackerSettings trackerSettings;
-    private GeohashRTFilter m_geoHashRTFilter;
 
-
-    private Tracker(Context context, TrackerSettings trackerSettings) {
+    private Tracker(Context context, TrackerSettings trackerSettings, TrackerSender sender) {
         this.context = context;
-        this.listenersToGeohash = new ArrayList<>();
         this.trackerSettings = trackerSettings;
+
         TrackerSharedPreferences.save(context, trackerSettings);
-
-        KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
-
-        m_geoHashRTFilter = new GeohashRTFilter(kalmanSettings.getGeoHashPrecision(),
-                                                kalmanSettings.getGeoHashMinPointCount());
-
+        TrackerBackgroundService.trackerSender = sender;
     }
 
-    public void addLocationServiceInterface(LocationServiceInterface locationServiceInterface) {
-        TrackerService.addInterface(locationServiceInterface);
+    public void addLocationServiceInterface(LocationTrackerListener locationTrackerListener) {
+        if (!TrackerBackgroundService.listenersToLocationTracker.contains(locationTrackerListener))
+            TrackerBackgroundService.listenersToLocationTracker.add(locationTrackerListener);
     }
 
-    public void removeLocationServiceInterface(LocationServiceInterface locationServiceInterface) {
-        TrackerService.removeInterface(locationServiceInterface);
+    public void removeLocationServiceInterface(LocationTrackerListener locationTrackerListener) {
+        TrackerBackgroundService.listenersToLocationTracker.remove(locationTrackerListener);
     }
 
     public void addListenerToGeohash(GeoHashFilterLocationListener listener) {
-        if(!listenersToGeohash.contains(listener))
-            listenersToGeohash.add(listener);
+        if (!TrackerBackgroundService.listenersToGeohash.contains(listener))
+            TrackerBackgroundService.listenersToGeohash.add(listener);
     }
 
     public void removeListenerToGeohash(GeoHashFilterLocationListener listener) {
-        listenersToGeohash.remove(listener);
+        TrackerBackgroundService.listenersToGeohash.remove(listener);
     }
 
-    public void changeTrackerId (String trackerID) {
-        TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
+    public void changeTrackedId (String trackedId) {
+        if (TrackerBackgroundService.trackerSender != null) {
+            TrackerBackgroundService.trackerSender.setTrackedId(trackedId);
+        }
+    }
+    public void changeTrackedStatus (boolean active) {
+        if (TrackerBackgroundService.trackerSender != null) {
+            TrackerBackgroundService.trackerSender.isActive = active;
+        }
 
-        if (trackerSettings != null) {
-            trackerSettings.setTrackedId(trackerID);
-            TrackerSharedPreferences.save(context, trackerSettings);
+        if(TrackerBackgroundService.runningInstance != null) {
+            TrackerBackgroundService.runningInstance.sendInformation();
         }
     }
 
-    @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION})
-    public void startTracking () {
-        if (trackerSettings != null) {
-            TrackerSharedPreferences.save(context, trackerSettings);
+
+    @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, KILL_BACKGROUND_PROCESSES})
+    public void startTracking() {
+        Intent mServiceIntent = new Intent(context, TrackerBackgroundService.class);
+
+        if (this.trackerSettings.getShouldAutoRestart()) {
+            mServiceIntent.setAction("uk.ac.shef.oak.ActivityRecognition.RestartSensor");
+            mServiceIntent.setAction("android.intent.action.BOOT_COMPLETED");
         }
 
-        Intent mServiceIntent = new Intent(context, TrackerService.class);
+        String pid = findServiceRunning();
 
-        Logger.d("isServiceRunning? " + (isServiceRunning()));
-
-        //To not running the same service twice
-        if (!isServiceRunning()) {
-            Logger.d("startService");
-            context.startService(mServiceIntent);
+        if (pid != null) {
+            try {
+                ActivityManager actvityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                if (actvityManager != null)
+                    actvityManager.killBackgroundProcesses(pid);// pkgn is a process id /////
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        m_geoHashRTFilter.reset();
-        TrackerService.addInterface(this);
+        context.startService(mServiceIntent);
     }
 
-    public void stopTracking () {
-        Logger.e("stopTracking");
+    public void stopTracking() {
+        Logger.d("stopTracking");
 
-        if (TrackerService.runningInstance != null) {
-
-            Logger.e("runningInstance != null");
-
+        if(TrackerBackgroundService.runningInstance != null) {
             TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
 
-            if (trackerSettings != null) {
-                trackerSettings.setShouldRestartIfKilled(false);
+            if(trackerSettings != null) {
+                trackerSettings.setShouldAutoRestart(false);
                 TrackerSharedPreferences.save(context, trackerSettings);
             }
 
-            TrackerService.runningInstance.stopSelf();
-
+            TrackerBackgroundService.runningInstance.stopSelf();
             TrackerSharedPreferences.remove(context, TrackerSettings.class);
-
-//            context.stopService(mServiceIntent);
-        }else {
-
-            Logger.e("runningInstance == null");
-
         }
-
-        m_geoHashRTFilter.stop();
-        TrackerService.removeInterface(this);
     }
 
-    public boolean isServiceRunning() {
+
+    private String findServiceRunning() {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (manager != null) {
-            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (TrackerService.class.getName().equals(service.service.getClassName())) {
-                    return true;
+        if(manager != null) {
+            for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if(TrackerBackgroundService.class.getName().equals(service.service.getClassName())) {
+                    return service.service.getPackageName();
                 }
             }
         }
-        return false;
+        return null;
     }
 
-    @Override
-    public void locationChanged(Location location) {
-        m_geoHashRTFilter.filter(location);
-
-        for (GeoHashFilterLocationListener listener : listenersToGeohash) {
-            listener.onGeoHashFilterUpdate(m_geoHashRTFilter.getGeoFilteredTrack());
-        }
-    }
 
     public static class Builder {
         private Context context;
         private TrackerSettings trackerSettings;
+        private TrackerSender sender = null;
 
-        public Builder(@NotNull Context context, @NotNull XmlResourceParser xmlIotClientSettings) throws IOException {
+        public Builder(Context context) throws Exception {
             this.context = context;
-            trackerSettings = new TrackerSettings(new AwsIotSettings(xmlIotClientSettings));
+            trackerSettings = new TrackerSettings();
         }
 
-        public Builder trackedId (String trackedId) {
-            trackerSettings.setTrackedId(trackedId);
+        /**
+         * Set a TrackerSender to send the user location filtered.
+         * Default is null.
+         */
+        public Builder sender(@NonNull TrackerSender sender) {
+            this.sender = sender;
             return this;
         }
 
-        public Builder intervalInSecondsToSendLocation(int intervalInSeconds) throws IllegalArgumentException {
-            if (intervalInSeconds < 0)
-                throw new IllegalArgumentException("Min interval to send to IoT is 0");
-
-            trackerSettings.setIntervalInSeconds(intervalInSeconds * 1000);
+        /**
+         * Enable tracker auto restart if user kill the application or restart the device.
+         * Default is false.
+         */
+        public Builder enableAutoRestart() {
+            trackerSettings.setShouldAutoRestart(true);
             return this;
         }
 
-        public Builder enableRestartIfKilled () {
-            trackerSettings.setShouldRestartIfKilled(true);
-            return this;
-        }
-
-        public Builder enableToSendSpeed () {
-            trackerSettings.setShouldSendSpeed(true);
-            return this;
-        }
-
-        public Builder enableToSendDirection () {
-            trackerSettings.setShouldSendDirection(true);
-            return this;
-        }
-
-        //region Kalman Settings
-        public Builder gpsMinTimeInSeconds (int value) throws IllegalArgumentException {
-            if (value < 1)
+        /**
+         * Frequency in seconds that callback will be activated.
+         * Must be higher or equal to 1
+         * Default is 2 secs.
+         */
+        public Builder intervalToCallbackInSeconds(int time) throws IllegalArgumentException {
+            if(time < 1)
                 throw new IllegalArgumentException("Min time to Gps position is 1");
 
             KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
-            kalmanSettings.gpsMinTime = value * 1000;
+            kalmanSettings.gpsMinTime = time * 1000;
             trackerSettings.setKalmanSettings(kalmanSettings);
             return this;
         }
 
-        public Builder gpsMinDistanceInMeters (int value) throws IllegalArgumentException {
-            if (value < 0)
+
+        /**
+         * Min distance in meters to be detected by gps.
+         * Must be higher or equal to 0
+         * Default is 0.
+         */
+        public Builder gpsMinDistanceInMeters(int value) throws IllegalArgumentException {
+            if(value < 0)
                 throw new IllegalArgumentException("Min distance to Gps distance is 0");
 
             KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
@@ -216,22 +190,23 @@ public class Tracker implements LocationServiceInterface {
             return this;
         }
 
-        public Builder geoHashPrecision (int value) throws IllegalArgumentException {
-            if (value < 1)
+        /**
+         * Precision of geo hash (count of decimal numbers).
+         * Must be higher or equal to 1
+         * Default is 6.
+         */
+        public Builder geoHashPrecision(int precision) throws IllegalArgumentException {
+            if(precision < 1)
                 throw new IllegalArgumentException("Min Geo Hash precision is 1");
 
             KalmanSettings kalmanSettings = trackerSettings.getKalmanSettings();
-            kalmanSettings.geoHashPrecision = value;
+            kalmanSettings.geoHashPrecision = precision;
             trackerSettings.setKalmanSettings(kalmanSettings);
             return this;
         }
-        //endregion Kalman Settings
 
-        public Tracker build () {
-            return new Tracker(context, trackerSettings);
+        public Tracker build() {
+            return new Tracker(context, trackerSettings, sender);
         }
-
     }
-
-
 }

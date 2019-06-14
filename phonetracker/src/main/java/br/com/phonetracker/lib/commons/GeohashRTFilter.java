@@ -2,11 +2,7 @@ package br.com.phonetracker.lib.commons;
 
 import android.location.Location;
 
-import br.com.phonetracker.lib.commons.Coordinates;
-import br.com.phonetracker.lib.commons.GeoPoint;
-import br.com.phonetracker.lib.commons.Utils;
 import br.com.phonetracker.lib.filters.GeoHash;
-import br.com.phonetracker.lib.interfaces.ILogger;
 
 import java.util.ArrayList;
 import java.util.List;

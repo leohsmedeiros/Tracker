@@ -1,13 +1,9 @@
 package br.com.phonetracker.lib
 
-import br.com.phonetracker.lib.services.AwsIotSettings
+import br.com.phonetracker.lib.commons.KalmanSettings
 import java.io.Serializable
 
-class TrackerSettings (val awsIotSettings: AwsIotSettings): Serializable {
-    var trackedId: String? = null
+class TrackerSettings : Serializable {
     var kalmanSettings: KalmanSettings = KalmanSettings()
-    var intervalInSeconds: Int = 10
-    var shouldRestartIfKilled: Boolean = false
-    var shouldSendSpeed: Boolean = false
-    var shouldSendDirection: Boolean = false
+    var shouldAutoRestart: Boolean = false
 }

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 public class TrackerSharedPreferences {
-    private static String SHARED_PREFERENCES_NAME = "TrackerService";
+    private static String SHARED_PREFERENCES_NAME = "TrackerBackgroundService";
 
     public static <T> void save (Context context, T content) {
         SharedPreferences.Editor editor = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit();

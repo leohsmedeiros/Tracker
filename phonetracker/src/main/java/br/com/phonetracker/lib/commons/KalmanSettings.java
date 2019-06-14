@@ -1,12 +1,10 @@
-package br.com.phonetracker.lib;
-
-import br.com.phonetracker.lib.commons.Utils;
+package br.com.phonetracker.lib.commons;
 
 public class KalmanSettings {
 
-    int gpsMinDistance = Utils.GPS_MIN_DISTANCE;
-    int gpsMinTime = Utils.GPS_MIN_TIME;
-    int geoHashPrecision = Utils.GEOHASH_DEFAULT_PREC;
+    public int gpsMinDistance = Utils.GPS_MIN_DISTANCE;
+    public int gpsMinTime = Utils.GPS_MIN_TIME;
+    public int geoHashPrecision = Utils.GEOHASH_DEFAULT_PREC;
 
 
     public double getAccelerationDeviation() {

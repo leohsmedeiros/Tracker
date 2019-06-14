@@ -7,9 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import br.com.phonetracker.lib.interfaces.LocationServiceInterface
 import br.com.phonetracker.lib.Tracker
-import br.com.phonetracker.lib.commons.Logger
+import br.com.phonetracker.lib.TrackerSender
+import br.com.phonetracker.lib.interfaces.GeoHashFilterLocationListener
+import br.com.phonetracker.lib.interfaces.LocationTrackerListener
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,16 +18,17 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.model.Polyline
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.irvem.iot.AwsIotSettings
 import com.leomedeiros.trackerconsumer.dto.History
+import com.leomedeiros.trackerconsumer.dto.IoTSender
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInterface, Tracker.GeoHashFilterLocationListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerListener, GeoHashFilterLocationListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var tracker: Tracker
@@ -39,6 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
     private var history: MutableList<History> = mutableListOf()
 
     private var isListeningPosition: Boolean = false
+    private var isServiceRunning: Boolean = false
 
     var polylines: MutableList<Polyline> = ArrayList()
     var polylinesGeoHash: MutableList<Polyline> = ArrayList()
@@ -71,16 +74,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        tracker = Tracker.Builder(this, resources.getXml(R.xml.aws_iot_settings))
-                            .trackedId("new Tracker")
-                            .enableRestartIfKilled()
-                            .intervalInSecondsToSendLocation(5)
-                            .enableToSendSpeed()
-                            .enableToSendDirection()
-                            .gpsMinTimeInSeconds(1)
-                            .gpsMinDistanceInMeters(0)
-                            .geoHashPrecision(6)
-                            .build()
+
+
+        val iotSettings = AwsIotSettings.build(assets.open("aws_iot_settings.xml"))
+
+        val trackerSender = TrackerSender
+                                .Builder(IoTSender(iotSettings))
+                                .frequencySenderActiveInSeconds(5)
+                                .frequencySenderInactiveInSeconds(10)
+                                .enableToSendSpeed()
+                                .enableToSendDirection()
+                                .build()
+
+
+        tracker = Tracker
+                    .Builder(this)
+                    .sender(trackerSender)
+                    .intervalToCallbackInSeconds(1)
+                    .gpsMinDistanceInMeters(0)
+                    .geoHashPrecision(6)
+                    .build()
 
         marker = mMap.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( LatLng(0.0, 0.0), 16f ))
@@ -108,6 +121,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
                 })
 
         }
+
+        tracker.changeTrackedId("TrackerConsumer")
 
         findViewById<Button>(R.id.tracker_button).performClick()
         findViewById<Button>(R.id.listener_button).performClick()
@@ -143,7 +158,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
     }
 
     override fun onGeoHashFilterUpdate(locationsFiltered: MutableList<Location>) {
-        Logger.e("[onGeoHashFilterUpdate] locations size: ${locationsFiltered.size}")
+//        Logger.e("[onGeoHashFilterUpdate] locations size: ${locationsFiltered.size}")
 
         if (isListeningPosition && locationsFiltered.size > 1) {
 
@@ -210,10 +225,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationServiceInt
     @SuppressLint("MissingPermission")
     fun onClickToStartStopSendingLocation (view: View) {
         if (view is Button) {
-            if (tracker.isServiceRunning) {
+            if (isServiceRunning) {
+                isServiceRunning = false
                 tracker.stopTracking()
                 view.text = resources.getString(R.string.start_sending_location)
             } else {
+                isServiceRunning = true
                 tracker.startTracking()
                 view.text = resources.getString(R.string.stop_sending_location)
             }
