@@ -6,23 +6,18 @@ import com.irvem.iot.AwsIot
 import com.irvem.iot.AwsIotSettings
 import org.json.JSONObject
 
-class IoTSender (val awsIotSettings: AwsIotSettings): ISender {
-    private var awsIot: AwsIot = AwsIot(awsIotSettings)
+class IotSender (awsIotSettings: AwsIotSettings, highQuality: Boolean, cleanSession: Boolean): ISender {
 
+    private val awsIot: AwsIot = AwsIot(awsIotSettings, highQuality, cleanSession)
 
-    override fun connect(context: Context?) {
-        awsIot.connect(context)
-    }
+    override fun connect(context: Context, onConnect: Runnable) = awsIot.connect(context, onConnect)
 
-    override fun isConnected(): Boolean {
-        return awsIot.isConnected
-    }
+    override fun isConnected(): Boolean = awsIot.isConnected
 
-    override fun disconnect() {
-        awsIot.disconnect()
-    }
+    override fun disconnect() = awsIot.disconnect()
 
-    override fun send(`object`: JSONObject?) {
-        awsIot.send(`object`)
-    }
+    override fun send(obj: JSONObject?) = awsIot.send(obj)
+
+    override fun logOnFile(message: String?) = awsIot.logOnFile(message)
+
 }

@@ -1,14 +1,21 @@
 package br.com.phonetracker.lib.commons;
 
-public class KalmanSettings {
+import java.io.Serializable;
 
-    public int gpsMinDistance = Utils.GPS_MIN_DISTANCE;
-    public int gpsMinTime = Utils.GPS_MIN_TIME;
-    public int geoHashPrecision = Utils.GEOHASH_DEFAULT_PREC;
+public class KalmanSettings implements Serializable {
+
+    private double accelerationDeviation = 0.1;
+    private int gpsMinDistance = 0;
+    private int gpsMinTime = 2000;
+    private int geoHashPrecision = 6;
+    private int geoHashMinPointCount = 2;
+    private double sensorFrequencyHz = 10.0;
+    private double mVelFactor = 1.0;
+    private double mPosFactor = 1.0;
 
 
     public double getAccelerationDeviation() {
-        return Utils.ACCELEROMETER_DEFAULT_DEVIATION;
+        return accelerationDeviation;
     }
     public int getGpsMinDistance() {
         return gpsMinDistance;
@@ -20,17 +27,16 @@ public class KalmanSettings {
         return geoHashPrecision;
     }
     public int getGeoHashMinPointCount() {
-        return Utils.GEOHASH_DEFAULT_MIN_POINT_COUNT;
+        return geoHashMinPointCount;
     }
     public double getSensorFrequencyHz() {
-        return Utils.SENSOR_DEFAULT_FREQ_HZ;
+        return sensorFrequencyHz;
     }
-
     public double getmVelFactor() {
-        return Utils.DEFAULT_VEL_FACTOR;
+        return mVelFactor;
     }
     public double getmPosFactor() {
-        return Utils.DEFAULT_POS_FACTOR;
+        return mPosFactor;
     }
 }
 

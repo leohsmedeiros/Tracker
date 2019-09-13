@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.karumi:dexter:5.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e80856c2615bde1e31a98e85a882bee5/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e80856c2615bde1e31a98e85a882bee5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec5647cb999880a4158e65b7eae0ac13/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec5647cb999880a4158e65b7eae0ac13/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

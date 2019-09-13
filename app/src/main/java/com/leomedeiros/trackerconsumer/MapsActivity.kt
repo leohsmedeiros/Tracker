@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import br.com.phonetracker.lib.Tracker
-import br.com.phonetracker.lib.TrackerSender
-import br.com.phonetracker.lib.interfaces.GeoHashFilterLocationListener
-import br.com.phonetracker.lib.interfaces.LocationTrackerListener
+import br.com.phonetracker.lib.TrackerSettings
+import br.com.phonetracker.lib.interfaces.TrackerGeoHashListener
+import br.com.phonetracker.lib.interfaces.TrackerLocationListener
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,10 +26,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.irvem.iot.AwsIotSettings
 import com.leomedeiros.trackerconsumer.dto.History
-import com.leomedeiros.trackerconsumer.dto.IoTSender
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerListener, GeoHashFilterLocationListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, TrackerLocationListener, TrackerGeoHashListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var tracker: Tracker
@@ -47,7 +47,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
     var polylinesGeoHash: MutableList<Polyline> = ArrayList()
 
 
-    fun signIn (email: String, password: String) {
+    private fun signIn (email: String, password: String) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 authResult ->
@@ -74,32 +74,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-
-
-        val iotSettings = AwsIotSettings.build(assets.open("aws_iot_settings.xml"))
-
-        val trackerSender = TrackerSender
-                                .Builder(IoTSender(iotSettings))
-                                .frequencySenderActiveInSeconds(5)
-                                .frequencySenderInactiveInSeconds(10)
-                                .enableToSendSpeed()
-                                .enableToSendDirection()
-                                .build()
-
-
-        tracker = Tracker
-                    .Builder(this)
-                    .sender(trackerSender)
-                    .intervalToCallbackInSeconds(1)
-                    .gpsMinDistanceInMeters(0)
-                    .geoHashPrecision(6)
-                    .build()
-
         marker = mMap.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( LatLng(0.0, 0.0), 16f ))
         mMap.uiSettings.isMyLocationButtonEnabled = true
 
         val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        var trackedId = ""
+
         if (firebaseUser != null) {
             FirebaseDatabase.getInstance()
                 .getReference(firebaseUser.uid)
@@ -120,9 +102,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
                     }
                 })
 
+            trackedId = firebaseUser.uid
         }
 
-        tracker.changeTrackedId("TrackerConsumer")
+        try {
+            val iotSettings = AwsIotSettings.build(assets.open("aws_iot_settings.xml"))
+
+            val trackerSettings = TrackerSettings.Builder()
+                .trackedId(trackedId)
+                .frequencyOnlineInSeconds(5)
+                .frequencyInactiveInSeconds(5)
+                .enableToSendSpeed()
+                .enableToSendDirection()
+                .build()
+
+            tracker = Tracker.Builder(this)
+                .sender(IotSender(iotSettings, highQuality = true, cleanSession = false))
+                .settings(trackerSettings)
+                .build()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         findViewById<Button>(R.id.tracker_button).performClick()
         findViewById<Button>(R.id.listener_button).performClick()
@@ -200,7 +201,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
         }
     }
 
-    fun onClickToRepositionCamera (view: View) {
+    fun onClickToRepositionCamera (v: View) {
+        Log.d(MapsActivity::class.java.name, "onClickToRepositionCamera: $v")
         mMap.moveCamera(CameraUpdateFactory.newLatLng( marker.position ))
     }
 
@@ -211,12 +213,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
             isListeningPosition = !isListeningPosition
 
             if (isListeningPosition) {
-                tracker.addLocationServiceInterface(this)
-                tracker.addListenerToGeohash(this)
+                tracker.addLocationListener(this)
+                tracker.addGeohashListener(this)
                 view.text = resources.getString(R.string.stop_listening_tracking)
             }else {
-                tracker.removeLocationServiceInterface(this)
-                tracker.removeListenerToGeohash(this)
+                tracker.removeLocationListener()
+                tracker.removeGeohashListener()
                 view.text = resources.getString(R.string.start_listening_tracking)
             }
         }
@@ -237,7 +239,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
         }
     }
 
-    fun onClickToClearRoute (view: View) {
+    fun onClickToClearRoute (v: View) {
+        Log.d(MapsActivity::class.java.name, "onClickToClearRoute: $v")
+
         polylines.forEach { polyline: Polyline -> polyline.remove() }
         polylines.clear()
 
@@ -248,7 +252,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationTrackerLis
         markersToGeohash.clear()
     }
 
-    fun onClickToSaveRoute (view: View) {
+    fun onClickToSaveRoute (v: View) {
+        Log.d(MapsActivity::class.java.name, "onClickToSaveRoute: $v")
+
         history.add(History(route, routeWithGeohashFilter))
 
         val firebaseUser = FirebaseAuth.getInstance().currentUser

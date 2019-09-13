@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: org.conscrypt:conscrypt-android:2.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3849d6ff116a8800bd11b15f6e0ab036/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3849d6ff116a8800bd11b15f6e0ab036/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eac2aba8d75a93ec25be0f110cd2e88f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eac2aba8d75a93ec25be0f110cd2e88f/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

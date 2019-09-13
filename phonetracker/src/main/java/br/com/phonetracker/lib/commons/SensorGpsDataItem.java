@@ -7,17 +7,17 @@ import android.support.annotation.NonNull;
  */
 
 public class SensorGpsDataItem implements Comparable<SensorGpsDataItem> {
-    double timestamp;
-    double gpsLat;
-    double gpsLon;
-    double gpsAlt;
-    double absNorthAcc;
-    double absEastAcc;
-    double absUpAcc;
-    double speed;
-    double course;
-    double posErr;
-    double velErr;
+    private double timestamp;
+    private double gpsLat;
+    private double gpsLon;
+    private double gpsAlt;
+    private double absNorthAcc;
+    private double absEastAcc;
+    private double absUpAcc;
+    private double speed;
+    private double course;
+    private double posErr;
+    private double velErr;
 
     public static final double NOT_INITIALIZED = 361.0;
 
@@ -92,4 +92,8 @@ public class SensorGpsDataItem implements Comparable<SensorGpsDataItem> {
         return (int) (this.timestamp - o.timestamp);
     }
 
+    @Override
+    public String toString() {
+        return "{ timestamp: " + timestamp + ", lat: " + getGpsLat() + ", lng: " + getGpsLon() + " }";
+    }
 }

@@ -4,6 +4,6 @@ import android.location.Location;
 
 import java.util.List;
 
-public interface GeoHashFilterLocationListener {
+public interface TrackerGeoHashListener {
     void onGeoHashFilterUpdate(List<Location> locationsFiltered);
 }

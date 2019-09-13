@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
 //apply plugin: 'com.github.dcendents.android-maven'
 //group='com.github.maddevsio'
 
@@ -25,6 +23,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+        staging {
+            debuggable false
         }
     }
     compileOptions {

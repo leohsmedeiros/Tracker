@@ -1,20 +1,22 @@
-package br.com.phonetracker.lib;
+package br.com.phonetracker.lib.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import br.com.phonetracker.lib.TrackerBackgroundService;
+import br.com.phonetracker.lib.commons.Logger;
+import br.com.phonetracker.lib.commons.TrackerSharedPreferences;
+
 public class ShutdownBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Logger.d("*************   ShutdownBroadcastReceiver   *************");
 
-        if (TrackerBackgroundService.runningInstance != null &&
-            TrackerBackgroundService.trackerSender != null ) {
-
-            TrackerBackgroundService.runningInstance.sendLastMessage();
-            TrackerBackgroundService.trackerSender.sender.disconnect();
-        }
+        Intent mServiceIntent = new Intent(context, TrackerBackgroundService.class);
+        mServiceIntent.putExtra(TrackerBackgroundService.Config.FORCE_STOP_TRACKER.toString(), "");
+        context.startService(new Intent(context, TrackerBackgroundService.class));
 
 
 //        TrackerSettings trackerSettings = TrackerSharedPreferences.load(context, TrackerSettings.class);
