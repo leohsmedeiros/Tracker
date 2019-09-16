@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          package="br.com.phonetracker" >
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--We don't need these permissions in lib-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+    <application>
+
+        <service
+            android:name=".lib.TrackerBackgroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="true" tools:ignore="InnerclassSeparator"/>
+
+        <receiver
+            android:name=".lib.broadcast.RestartBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="uk.ac.shef.oak.ActivityRecognition.RestartSensor"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
+
