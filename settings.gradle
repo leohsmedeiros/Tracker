@@ -1,3 +1,0 @@
-include ':app'
-include ':phonetracker'
-include ':iot'
