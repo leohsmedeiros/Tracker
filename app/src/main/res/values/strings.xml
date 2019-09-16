@@ -1,0 +1,12 @@
+<resources>
+    <string name="content_description"/>
+    <string name="app_name">TrackerConsumer</string>
+    <string name="title_activity_maps">TrackerConsumer</string>
+    <string name="stop_sending_location">Stop Tracker</string>
+    <string name="start_sending_location">Init Tracker</string>
+    <string name="start_listening_tracking">Start Drawing Route</string>
+    <string name="stop_listening_tracking">Stop Drawing Route</string>
+    <string name="clear_route">Clear Route</string>
+    <string name="save_route">Save Route</string>
+    <string name="info_window_title">position</string>
+</resources>
